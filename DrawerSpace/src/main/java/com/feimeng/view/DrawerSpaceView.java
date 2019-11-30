@@ -28,8 +28,8 @@ public class DrawerSpaceView extends LinearLayout implements View.OnTouchListene
     private boolean mSpaceInit;
     private View mSpaceView;
     private int mAnimationDuration = 250;
-    private OnStateChangeListener mStateChangeListener;
-    private Runnable mHideRunnable;
+    private OnStateChangeListener mStateChangeListener, mStateChangeImmediateListener;
+    private Runnable mShowHideRunnable;
 
     public DrawerSpaceView(Context context) {
         this(context, null);
@@ -112,7 +112,7 @@ public class DrawerSpaceView extends LinearLayout implements View.OnTouchListene
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mHideRunnable = null;
+        mShowHideRunnable = null;
     }
 
     public void setSpaceView(View view) {
@@ -129,14 +129,30 @@ public class DrawerSpaceView extends LinearLayout implements View.OnTouchListene
         if (!mIsAnimating && mIsShowing) setBackgroundColor(mDimColor);
     }
 
+    /**
+     * 设置动画执行时长
+     */
     public void setAnimationDuration(int animationDuration) {
         mAnimationDuration = animationDuration;
     }
 
+    /**
+     * 添加内容的显示和隐藏状态改变监听器，显隐的时候才回调
+     */
     public void setStateChangeListener(OnStateChangeListener stateChangeListener) {
         mStateChangeListener = stateChangeListener;
     }
 
+    /**
+     * 添加内容的显示和隐藏状态改变监听器，显隐操作完立即回调
+     */
+    public void setStateChangeImmediateListener(OnStateChangeListener stateChangeImmediateListener) {
+        mStateChangeImmediateListener = stateChangeImmediateListener;
+    }
+
+    /**
+     * 内容的显示和隐藏状态改变监听器
+     */
     public interface OnStateChangeListener {
         void onStateChange(boolean showing);
     }
@@ -145,6 +161,9 @@ public class DrawerSpaceView extends LinearLayout implements View.OnTouchListene
         return mIsShowing;
     }
 
+    /**
+     * 切换内容的显示和隐藏状态
+     */
     public void toggle() {
         if (mIsShowing) {
             hide();
@@ -154,9 +173,19 @@ public class DrawerSpaceView extends LinearLayout implements View.OnTouchListene
     }
 
     public void show() {
+        show(null);
+    }
+
+    /**
+     * 显示内容
+     *
+     * @param runnable 显示后回调
+     */
+    public void show(Runnable runnable) {
         if (mIsAnimating) return;
         if (!mIsShowing) {
             mIsShowing = true;
+            mShowHideRunnable = runnable;
             animateViewIn();
         }
     }
@@ -165,17 +194,35 @@ public class DrawerSpaceView extends LinearLayout implements View.OnTouchListene
         hide(null);
     }
 
+    /**
+     * 隐藏内容
+     *
+     * @param runnable 隐藏后回调
+     */
     public void hide(Runnable runnable) {
         if (mIsAnimating) return;
         if (mIsShowing) {
             mIsShowing = false;
-            mHideRunnable = runnable;
+            mShowHideRunnable = runnable;
             animateViewOut();
         }
     }
 
+    public boolean wantHide() {
+        if (mIsAnimating) return true;
+        if (mIsShowing) {
+            hide();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 执行进入动画
+     */
     private void animateViewIn() {
-        if (mStateChangeListener != null) mStateChangeListener.onStateChange(true);
+        if (mStateChangeImmediateListener != null)
+            mStateChangeImmediateListener.onStateChange(true);
         View spaceView = getSpaceView();
         ViewCompat.animate(spaceView)
                 .translationY(0)
@@ -186,17 +233,27 @@ public class DrawerSpaceView extends LinearLayout implements View.OnTouchListene
                     public void onAnimationStart(View view) {
                         mIsAnimating = true;
                         setVisibility(View.VISIBLE);
+                        if (mStateChangeListener != null) mStateChangeListener.onStateChange(true);
                     }
 
                     @Override
                     public void onAnimationEnd(View view) {
                         mIsAnimating = false;
+                        if (mShowHideRunnable != null) {
+                            mShowHideRunnable.run();
+                            mShowHideRunnable = null;
+                        }
                     }
                 }).withLayer().start();
         if (mDimColor != null) updateDim(Color.TRANSPARENT, mDimColor);
     }
 
+    /**
+     * 执行退出动画
+     */
     private void animateViewOut() {
+        if (mStateChangeImmediateListener != null)
+            mStateChangeImmediateListener.onStateChange(false);
         View spaceView = getSpaceView();
         ViewCompat.animate(spaceView)
                 .translationY(-spaceView.getHeight())
@@ -213,15 +270,21 @@ public class DrawerSpaceView extends LinearLayout implements View.OnTouchListene
                         mIsAnimating = false;
                         setVisibility(View.GONE);
                         if (mStateChangeListener != null) mStateChangeListener.onStateChange(false);
-                        if (mHideRunnable != null) {
-                            mHideRunnable.run();
-                            mHideRunnable = null;
+                        if (mShowHideRunnable != null) {
+                            mShowHideRunnable.run();
+                            mShowHideRunnable = null;
                         }
                     }
                 }).withLayer().start();
         if (mDimColor != null) updateDim(mDimColor, Color.TRANSPARENT);
     }
 
+    /**
+     * 过渡外部背景色
+     *
+     * @param startColor 起始颜色
+     * @param endColor   结束颜色
+     */
     private void updateDim(int startColor, int endColor) {
         ValueAnimator colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
         colorAnimator.addUpdateListener(animation -> setBackgroundColor((int) animation.getAnimatedValue()));
