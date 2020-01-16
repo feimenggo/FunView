@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BlurView">
+        <!-- 0 < radius <= 25 -->
+        <attr name="blurRadius" format="integer" />
+        <!-- 降低采样 -->
+        <attr name="downsampleFactor" format="integer" />
+        <!-- 模糊的颜色 默认50%白色 -->
+        <attr name="overlayColor" format="color" />
+    </declare-styleable>
+</resources>

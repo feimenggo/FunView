@@ -1,2 +1,2 @@
-include ':app', ':DrawerSpace'
+include ':app', ':DrawerSpace', ':Blur', ':NetWorkMonitor'
 rootProject.name='Fun'
