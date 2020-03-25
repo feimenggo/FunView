@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Fun</string>
+    <string name="behavior_sample_title">com.feimeng.fun.SampleTitleBehavior</string>
 </resources>

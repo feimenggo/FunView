@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="btn" type="id" />
+    <item name="loading" type="id" />
+    <item name="success" type="id" />
+    <item name="failure" type="id" />
+    <item name="root" type="id" />
 </resources>
