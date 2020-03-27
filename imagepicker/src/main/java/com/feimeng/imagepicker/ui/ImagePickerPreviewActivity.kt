@@ -56,7 +56,7 @@ class ImagePickerPreviewActivity : BaseImagePickerActivity(), ViewPager.OnPageCh
         super.onCreate(savedInstanceState)
         window.decorView.setBackgroundColor(Color.parseColor("#2A2A2A"))
         mIsMulti = SelectionSpec.instance.maxSelectable > 1
-        setContentView(if (mIsMulti) R.layout.activity_image_picker_preview else R.layout.activity_image_picker_preview_single)
+        setContentView(if (mIsMulti) R.layout.ip_activity_image_picker_preview else R.layout.ip_activity_image_picker_preview_single)
         initView()
     }
 

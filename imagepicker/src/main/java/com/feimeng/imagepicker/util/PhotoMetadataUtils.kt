@@ -120,25 +120,18 @@ class PhotoMetadataUtils private constructor() {
             if (!isSelectableType(context, albumMedia)) {
                 return IncapableCause(context.getString(R.string.error_file_type))
             }
-
             if (SelectionSpec.instance.filters != null) {
                 for (filter in SelectionSpec.instance.filters!!) {
-                    val incapableCause = filter.filter(context, albumMedia)
-                    if (incapableCause != null) {
-                        return incapableCause
-                    }
+                    return filter.filter(context, albumMedia)
                 }
             }
             return null
         }
 
         private fun isSelectableType(context: Context?, albumMedia: AlbumMedia): Boolean {
-            if (context == null) {
-                return false
-            }
-
+            if (context == null) return false
             val resolver = context.contentResolver
-            for (type in SelectionSpec.instance!!.mimeTypeSet) {
+            for (type in SelectionSpec.instance.mimeTypeSet) {
                 if (type.checkType(resolver, albumMedia.contentUri)) {
                     return true
                 }
@@ -160,7 +153,7 @@ class PhotoMetadataUtils private constructor() {
         }
 
         fun getSizeInMB(sizeInBytes: Long): Float {
-            return java.lang.Float.valueOf(DecimalFormat("0.0").format((sizeInBytes.toFloat() / 1024f / 1024f).toDouble()))!!
+            return java.lang.Float.valueOf(DecimalFormat("0.0").format((sizeInBytes.toFloat() / 1024f / 1024f).toDouble()))
         }
     }
 }

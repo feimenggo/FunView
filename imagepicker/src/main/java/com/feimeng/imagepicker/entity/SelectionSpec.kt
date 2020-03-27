@@ -25,11 +25,11 @@ import com.feimeng.imagepicker.R
 import com.feimeng.imagepicker.engine.ImageEngine
 import com.feimeng.imagepicker.filter.Filter
 
-class SelectionSpec private constructor()  {
-
+class SelectionSpec private constructor() {
     var mimeTypeSet: Set<MimeType> = setOf()
     var mediaTypeExclusive: Boolean = false
     var showSingleMediaType: Boolean = false
+
     @StyleRes
     var themeId: Int = 0
     var orientation: Int = 0
@@ -39,7 +39,6 @@ class SelectionSpec private constructor()  {
     var maxVideoSelectable: Int = 0
     var filters: ArrayList<Filter>? = null
     var capture: Boolean = false
-    var captureStrategy: CaptureStrategy? = null
     var spanCount: Int = 0
     var gridExpectedSize: Int = 0
     var thumbnailScale: Float = 0.toFloat()
@@ -51,12 +50,11 @@ class SelectionSpec private constructor()  {
 
     private fun reset() {
         if (InstanceHolder.imageEngineHolder == null) {
-            throw NullPointerException(
-                    "the default imageEngine can't be null, please init it by the SelectionSpec.getNewCleanInstance(imageEngine)")
+            throw NullPointerException("the default imageEngine can't be null, please init it by the SelectionSpec.getNewCleanInstance(imageEngine)")
         }
         this.imageEngine = InstanceHolder.imageEngineHolder!!
         mimeTypeSet = MimeType.ofImage()
-        mediaTypeExclusive = true
+        mediaTypeExclusive = false
         showSingleMediaType = false
         themeId = R.style.Theme_AppCompat_Light
         orientation = SCREEN_ORIENTATION_PORTRAIT
@@ -66,7 +64,6 @@ class SelectionSpec private constructor()  {
         maxVideoSelectable = 0
         filters = null
         capture = false
-        captureStrategy = null
         spanCount = 3
         gridExpectedSize = 0
         thumbnailScale = 0.5f
@@ -88,7 +85,7 @@ class SelectionSpec private constructor()  {
         return showSingleMediaType && MimeType.ofVideo().containsAll(mimeTypeSet)
     }
 
-//    override
+    //    override
     fun onDisplay() {
         instance = this
     }
@@ -136,9 +133,7 @@ class SelectionSpec private constructor()  {
          * @return SelectionSpec
          */
         fun getNewCleanInstance(imageEngine: ImageEngine?): SelectionSpec {
-            if (imageEngine == null) {
-                throw IllegalArgumentException("the param imageEngine can't be null.")
-            }
+            if (imageEngine == null) throw IllegalArgumentException("the param imageEngine can't be null.")
             setDefaultImageEngine(imageEngine)
             return SelectionSpec()
         }

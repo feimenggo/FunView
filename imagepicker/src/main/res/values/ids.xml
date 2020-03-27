@@ -11,4 +11,6 @@
     <item name="imageRV" type="id" />
     <item name="check" type="id" />
     <item name="scroll" type="id" />
+    <item name="videoDuration" type="id" />
+    <item name="shadow" type="id" />
 </resources>

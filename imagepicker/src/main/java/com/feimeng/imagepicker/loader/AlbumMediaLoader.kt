@@ -106,11 +106,11 @@ class AlbumMediaLoader private constructor(context: Context, selection: String, 
 
             if (album.isAll) {
                 when {
-                    SelectionSpec.instance!!.onlyShowImages() -> {
+                    SelectionSpec.instance.onlyShowImages() -> {
                         selection = SELECTION_ALL_FOR_SINGLE_MEDIA_TYPE
                         selectionArgs = getSelectionArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)
                     }
-                    SelectionSpec.instance!!.onlyShowVideos() -> {
+                    SelectionSpec.instance.onlyShowVideos() -> {
                         selection = SELECTION_ALL_FOR_SINGLE_MEDIA_TYPE
                         selectionArgs = getSelectionArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
                     }
@@ -122,12 +122,12 @@ class AlbumMediaLoader private constructor(context: Context, selection: String, 
                 enableCapture = capture
             } else {
                 when {
-                    SelectionSpec.instance!!.onlyShowImages() -> {
+                    SelectionSpec.instance.onlyShowImages() -> {
                         selection = SELECTION_ALBUM_FOR_SINGLE_MEDIA_TYPE
                         selectionArgs = getSelectionAlbumArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE,
                                 album.id)
                     }
-                    SelectionSpec.instance!!.onlyShowVideos() -> {
+                    SelectionSpec.instance.onlyShowVideos() -> {
                         selection = SELECTION_ALBUM_FOR_SINGLE_MEDIA_TYPE
                         selectionArgs = getSelectionAlbumArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO,
                                 album.id)

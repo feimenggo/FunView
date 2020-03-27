@@ -21,7 +21,6 @@ import android.text.TextUtils
 import androidx.appcompat.app.AlertDialog
 import com.feimeng.imagepicker.R
 
-
 class IncapableDialog : androidx.fragment.app.DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

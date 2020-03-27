@@ -18,7 +18,6 @@ package com.feimeng.imagepicker.collection
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import com.feimeng.imagepicker.R
@@ -140,24 +139,16 @@ class SelectedItemCollection(private val mContext: Context) {
     @SuppressLint("ResourceType")
     fun isAcceptable(albumMedia: AlbumMedia): IncapableCause? {
         if (maxSelectableReached()) {
-            val maxSelectable = currentMaxSelectable()
-            val cause = try {
-                mContext.resources.getQuantityString(
-                        R.string.error_over_count,
-                        maxSelectable,
-                        maxSelectable
-                )
-            } catch (e: Resources.NotFoundException) {
-                mContext.getString(
-                        R.string.error_over_count,
-                        maxSelectable
-                )
+            val overCount = mContext.getString(R.string.error_over_count)
+            val content = if (overCount.contains("%d")) {
+                String.format(overCount, currentMaxSelectable())
+            } else {
+                overCount
             }
-            return IncapableCause(cause)
+            return IncapableCause(content)
         } else if (typeConflict(albumMedia)) {
             return IncapableCause(mContext.getString(R.string.error_type_conflict))
         }
-
         return PhotoMetadataUtils.isAcceptable(mContext, albumMedia)
     }
 
@@ -199,8 +190,8 @@ class SelectedItemCollection(private val mContext: Context) {
      * Determine whether there will be conflict media types. A user can only select images and videos at the same time
      * while [SelectionSpec.mediaTypeExclusive] is set to false.
      */
-    fun typeConflict(albumMedia: AlbumMedia): Boolean {
-        return SelectionSpec.instance!!.mediaTypeExclusive && (albumMedia.isImage && (collectionType == COLLECTION_VIDEO || collectionType == COLLECTION_MIXED) || albumMedia.isVideo && (collectionType == COLLECTION_IMAGE || collectionType == COLLECTION_MIXED))
+    private fun typeConflict(albumMedia: AlbumMedia): Boolean {
+        return SelectionSpec.instance.mediaTypeExclusive && (albumMedia.isImage && (collectionType == COLLECTION_VIDEO || collectionType == COLLECTION_MIXED) || albumMedia.isVideo && (collectionType == COLLECTION_IMAGE || collectionType == COLLECTION_MIXED))
     }
 
     fun count(): Int {

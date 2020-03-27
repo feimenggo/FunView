@@ -16,16 +16,21 @@
 package com.feimeng.imagepicker.entity
 
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.IntDef
+import com.feimeng.imagepicker.R
 import com.feimeng.imagepicker.ui.dialog.IncapableDialog
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy.SOURCE
 
 @Suppress("DEPRECATED_JAVA_ANNOTATION")
 class IncapableCause {
-
     private var mForm = TOAST
     private var mTitle: String? = null
     private var mMessage: String? = null
@@ -61,10 +66,9 @@ class IncapableCause {
         const val DIALOG = 0x01
         const val NONE = 0x02
 
-        fun handleCause(context: Context, cause: IncapableCause?) {
-            if (cause == null)
-                return
-
+        @SuppressLint("InflateParams")
+        fun handleCause(context: Context, cause: IncapableCause?): Boolean {
+            if (cause == null) return true
             when (cause.mForm) {
                 NONE -> {
                 }
@@ -73,9 +77,17 @@ class IncapableCause {
                     incapableDialog.show((context as androidx.fragment.app.FragmentActivity).supportFragmentManager,
                             IncapableDialog::class.java.name)
                 }
-                TOAST -> Toast.makeText(context, cause.mMessage, Toast.LENGTH_SHORT).show()
-                else -> Toast.makeText(context, cause.mMessage, Toast.LENGTH_SHORT).show()
-            }// do nothing.
+                TOAST -> {
+                    val toast: Toast = Toast.makeText(context, cause.mMessage, Toast.LENGTH_SHORT)
+                    val viewGroup = LayoutInflater.from(context).inflate(R.layout.ip_view_toast, null) as ViewGroup
+                    val msg = viewGroup.getChildAt(0) as TextView
+                    msg.text = cause.mMessage
+                    toast.view = viewGroup
+                    toast.setGravity(Gravity.CENTER, 0, 0)
+                    toast.show()
+                }
+            }
+            return false
         }
     }
 }

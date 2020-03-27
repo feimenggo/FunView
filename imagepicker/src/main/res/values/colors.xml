@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_2a2a2a">#2A2A2A</color>
-    <color name="color_2dbcff">#2dbcff</color>
-    <color name="color_727272">#727272</color>
-    <color name="color_d1d1d1">#d1d1d1</color>
-
-    <color name="preview_bottom_toolbar_bg">#CC000000</color>
-    <color name="preview_bottom_size">#61FFFFFF</color>
-
-    <color name="default_item_checkCircle_borderColor">#FFFFFF</color>
-    <color name="default_item_checkCircle_backgroundColor">#1E8AE8</color>
-
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
     <color name="blue">#2DBCFF</color>
 
     <color name="checked">#6B71FF</color>
+
+    <color name="ipTitle">#2A2A2A</color>
 
     <color name="previewEnable">#2A2A2A</color>
     <color name="previewDisable">#D3DBE3</color>

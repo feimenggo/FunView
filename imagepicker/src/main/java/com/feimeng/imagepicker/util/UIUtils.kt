@@ -18,7 +18,6 @@ package com.feimeng.imagepicker.util
 import android.content.Context
 
 object UIUtils {
-
     fun spanCount(context: Context, gridExpectedSize: Int): Int {
         val screenWidth = context.resources.displayMetrics.widthPixels
         val expected = screenWidth.toFloat() / gridExpectedSize.toFloat()

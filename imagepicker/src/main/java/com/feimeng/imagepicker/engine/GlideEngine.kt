@@ -64,5 +64,4 @@ class GlideEngine : ImageEngine {
     override fun supportAnimatedGif(): Boolean {
         return true
     }
-
 }

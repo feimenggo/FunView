@@ -36,7 +36,7 @@ class AlbumAdapter(private val action: ImagePickerAction) : RecyclerView.Adapter
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_picker_album, parent, false), action)
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.ip_item_picker_album, parent, false), action)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

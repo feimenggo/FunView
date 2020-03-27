@@ -3,6 +3,7 @@ package com.feimeng.imagepicker.adapter
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,6 @@ import com.feimeng.imagepicker.entity.Const
 import com.feimeng.imagepicker.entity.IncapableCause
 import com.feimeng.imagepicker.entity.SelectionSpec
 import com.feimeng.imagepicker.ui.ImagePickerAction
-import java.lang.reflect.Field
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -61,10 +61,10 @@ class AlbumMediaAdapter(private val action: ImagePickerAction) : RecyclerView.Ad
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_CAPTURE -> {
-                CaptureViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_picker_picture_capture_photo, parent, false))
+                CaptureViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.ip_item_picker_media_capture_photo, parent, false))
             }
             VIEW_TYPE_MEDIA -> {
-                MediaViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_picker_picture, parent, false))
+                MediaViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.ip_item_picker_media, parent, false))
             }
             else -> throw IllegalArgumentException("except VIEW_TYPE_CAPTURE(0x01) or VIEW_TYPE_MEDIA(0x02), but is $viewType")
         }
@@ -104,6 +104,7 @@ class AlbumMediaAdapter(private val action: ImagePickerAction) : RecyclerView.Ad
         lateinit var item: AlbumMedia
         var image: ImageView = itemView.findViewById(R.id.image)
         var check: TextView = itemView.findViewById(R.id.check)
+        val videoDuration: TextView = itemView.findViewById(R.id.videoDuration)
 
         init {
             itemView.setOnClickListener(this)
@@ -130,18 +131,22 @@ class AlbumMediaAdapter(private val action: ImagePickerAction) : RecyclerView.Ad
 
         fun updateImage(context: Context) {
             if (item.isGif) {
-                SelectionSpec.instance.imageEngine.loadGifThumbnail(context, 0,
-                        ColorDrawable(Color.GRAY), image, item.contentUri)
+                SelectionSpec.instance.imageEngine.loadGifThumbnail(context, 0, ColorDrawable(Color.GRAY), image, item.contentUri)
             } else {
-                SelectionSpec.instance.imageEngine.loadThumbnail(context, 0,
-                        ColorDrawable(Color.GRAY), image, item.contentUri)
+                SelectionSpec.instance.imageEngine.loadThumbnail(context, 0, ColorDrawable(Color.GRAY), image, item.contentUri)
+            }
+            if (item.isVideo) {
+                videoDuration.visibility = View.VISIBLE
+                videoDuration.text = DateUtils.formatElapsedTime(item.duration / 1000)
+            } else {
+                videoDuration.visibility = View.GONE
             }
         }
 
         override fun onClick(v: View) {
             val checkedNum: Int = action.selectionCollection().checkedNumOf(item)
             if (checkedNum == Const.UNCHECKED) {
-                if (assertAddSelection()) {
+                if (assertAddSelection(itemView.context)) {
                     action.selectionCollection().add(item)
                     notifySelectionChanged()
                 }
@@ -151,24 +156,9 @@ class AlbumMediaAdapter(private val action: ImagePickerAction) : RecyclerView.Ad
             }
         }
 
-        private fun assertAddSelection(): Boolean {
-            val cause: IncapableCause? = action.selectionCollection().isAcceptable(item)
-            return if (cause != null) {
-                try {
-                    val field: Field = IncapableCause::class.java.getDeclaredField("mMessage")
-                    field.isAccessible = true
-                    val message = field[cause] as String
-//                    mAction.tips(message)
-                } catch (e: NoSuchFieldException) {
-                    e.printStackTrace()
-                } catch (e: IllegalAccessException) {
-                    e.printStackTrace()
-                }
-                false
-            } else {
-                true
-//                if (item.isGif) action.selectionCollection().addGif() else true
-            }
+        private fun assertAddSelection(context: Context): Boolean {
+            val cause = action.selectionCollection().isAcceptable(item)
+            return IncapableCause.handleCause(context, cause)
         }
     }
 

@@ -23,7 +23,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="最近项目"
-        android:textColor="@color/color_2a2a2a"
+        android:textColor="@color/ipTitle"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -33,15 +33,6 @@
         android:layout_height="match_parent"
         android:layout_marginTop="49dp"
         android:layout_marginBottom="49dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@id/albumRV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="49dp"
-        android:layout_marginBottom="200dp"
-        android:background="@color/white"
-        android:visibility="gone" />
 
     <TextView
         android:id="@id/preview"
@@ -68,4 +59,21 @@
         android:textColor="#ffffffff"
         android:textSize="13sp"
         android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@id/albumRV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="49dp"
+        android:layout_marginBottom="200dp"
+        android:background="@color/white"
+        android:visibility="gone" />
+
+    <View
+        android:id="@id/shadow"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="bottom"
+        android:background="#A0000000"
+        android:visibility="gone" />
 </FrameLayout>

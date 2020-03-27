@@ -74,7 +74,7 @@ public class ImagePickerDemoActivity extends AppCompatActivity implements View.O
     private void pickerMulti() {
         SelectionSpec selectionSpec = SelectionSpec.Companion.getNewCleanInstance(new GlideEngine());
         selectionSpec.setCapture(true);
-        selectionSpec.setMimeTypeSet(MimeType.INSTANCE.ofImage());
+        selectionSpec.setMimeTypeSet(MimeType.INSTANCE.ofAll());
         selectionSpec.setMediaTypeExclusive(false);
         selectionSpec.setMaxSelectable(9);
         ImagePicker.Companion.start(this, 10, selectionSpec);

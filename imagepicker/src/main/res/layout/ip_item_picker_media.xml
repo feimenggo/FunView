@@ -25,4 +25,15 @@
         android:textColor="@drawable/selector_picker_picture_check"
         android:textSize="12sp"
         tools:text="2" />
+
+    <TextView
+        android:id="@id/videoDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:visibility="gone" />
 </com.feimeng.imagepicker.ui.widget.SquareFrameLayout>

@@ -43,7 +43,8 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
 
     private lateinit var mAlbumTitleView: TextView
     private lateinit var mAlbumRV: RecyclerView
-    private lateinit var mImageRV: RecyclerView
+    private lateinit var mAlbumMediaRV: RecyclerView
+    private lateinit var mShadow: View
     private var mAlbumAdapter: AlbumAdapter = AlbumAdapter(this)
     private var mAlbumMediaAdapter: AlbumMediaAdapter = AlbumMediaAdapter(this)
 
@@ -69,7 +70,7 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
         overridePendingTransition(R.anim.in_from_bottom, R.anim.none)
         super.onCreate(savedInstanceState)
         window.decorView.setBackgroundColor(Color.WHITE)
-        setContentView(R.layout.activity_image_picker)
+        setContentView(R.layout.ip_activity_image_picker)
         initView()
         initData(savedInstanceState)
     }
@@ -83,13 +84,15 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
         // 相册列表
         mAlbumTitleView = findViewById(R.id.albumTitle)
         mAlbumTitleView.setOnClickListener(this)
+        mShadow = findViewById(R.id.shadow)
+        mShadow.setOnClickListener(this)
         mAlbumRV = findViewById(R.id.albumRV)
         mAlbumRV.setHasFixedSize(true)
         mAlbumRV.layoutManager = LinearLayoutManager(this)
         mAlbumRV.adapter = mAlbumAdapter
         // 图片列表
-        mImageRV = findViewById(R.id.imageRV)
-        mImageRV.setHasFixedSize(true)
+        mAlbumMediaRV = findViewById(R.id.imageRV)
+        mAlbumMediaRV.setHasFixedSize(true)
         val spanCount: Int
         val selectionSpec = SelectionSpec.instance
         spanCount = if (selectionSpec.gridExpectedSize > 0) {
@@ -97,10 +100,10 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
         } else {
             selectionSpec.spanCount
         }
-        mImageRV.layoutManager = GridLayoutManager(this, spanCount)
+        mAlbumMediaRV.layoutManager = GridLayoutManager(this, spanCount)
         val spacing = resources.getDimensionPixelSize(R.dimen.media_grid_spacing)
-        mImageRV.addItemDecoration(MediaGridInset(spanCount, spacing, false))
-        mImageRV.adapter = mAlbumMediaAdapter
+        mAlbumMediaRV.addItemDecoration(MediaGridInset(spanCount, spacing, false))
+        mAlbumMediaRV.adapter = mAlbumMediaAdapter
     }
 
     private fun initData(savedInstanceState: Bundle?) {
@@ -209,7 +212,7 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
     override fun onClick(v: View) {
         when (v.id) {
             R.id.back -> onBackPressed()
-            R.id.albumTitle -> {
+            R.id.albumTitle, R.id.shadow -> {
                 if (mAlbumTitleView.isSelected) { // 隐藏相册列表
                     hideAlbumList()
                 } else { // 显示相册列表
@@ -228,11 +231,13 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
     private fun showAlbumList() {
         mAlbumTitleView.isSelected = true
         mAlbumRV.visibility = View.VISIBLE
+        mShadow.visibility = View.VISIBLE
     }
 
     private fun hideAlbumList() {
         mAlbumTitleView.isSelected = false
         mAlbumRV.visibility = View.GONE
+        mShadow.visibility = View.GONE
     }
 
     private fun pickerResult(images: ArrayList<Uri>) {
