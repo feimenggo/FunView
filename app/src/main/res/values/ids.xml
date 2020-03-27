@@ -5,4 +5,7 @@
     <item name="success" type="id" />
     <item name="failure" type="id" />
     <item name="root" type="id" />
+    <item name="multi" type="id" />
+    <item name="single" type="id" />
+    <item name="tv" type="id" />
 </resources>

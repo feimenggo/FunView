@@ -1,0 +1,47 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:background="#2A2A2A"
+    tools:context=".ui.ImagePickerPreviewActivity">
+
+    <ImageView
+        android:id="@id/back"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:gravity="center"
+        android:src="#abc2e4" />
+
+    <ImageView
+        android:id="@id/check"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:src="#abc2e4" />
+
+    <com.feimeng.imagepicker.ui.widget.HackyViewPager
+        android:id="@id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="49dp"
+        android:layout_marginBottom="49dp"
+        android:background="#000000"
+        android:overScrollMode="never" />
+
+    <TextView
+        android:id="@id/confirm"
+        android:layout_width="72dp"
+        android:layout_height="32dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/selector_picker_picture_preview_confirm"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@drawable/selector_picker_picture_preview_confirm"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+</FrameLayout>

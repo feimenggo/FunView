@@ -1,2 +1,3 @@
 include ':app', ':DrawerSpace', ':Blur', ':NetWorkMonitor', ':loading'
 rootProject.name='Fun'
+include ':imagepicker'

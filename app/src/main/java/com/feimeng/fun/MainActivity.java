@@ -10,7 +10,6 @@ import com.feimeng.network.monitor.NetWorkMonitorManager;
 import com.feimeng.network.monitor.NetWorkState;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

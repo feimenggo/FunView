@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".imagepicker.ImagePickerDemoActivity">
+
+    <TextView
+        android:id="@id/single"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="单张图片"
+        android:textColor="@color/title"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@id/multi"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="多张图片"
+        android:textColor="@color/title"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/title"
+        android:textSize="15sp" />
+</LinearLayout>

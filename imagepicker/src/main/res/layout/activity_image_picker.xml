@@ -1,0 +1,71 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.ImagePickerActivity">
+
+    <ImageView
+        android:id="@id/back"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:gravity="center"
+        android:src="#abc2e4" />
+
+    <TextView
+        android:id="@id/albumTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:layout_gravity="center_horizontal"
+        android:drawableRight="@drawable/icon_arrow_down"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="最近项目"
+        android:textColor="@color/color_2a2a2a"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@id/imageRV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="49dp"
+        android:layout_marginBottom="49dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@id/albumRV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="49dp"
+        android:layout_marginBottom="200dp"
+        android:background="@color/white"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@id/preview"
+        android:layout_width="60dp"
+        android:layout_height="49dp"
+        android:layout_gravity="bottom"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="预览"
+        android:textColor="@drawable/selector_picker_picture_preview"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@id/confirm"
+        android:layout_width="72dp"
+        android:layout_height="32dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/selector_picker_picture_confirm"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="#ffffffff"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+</FrameLayout>

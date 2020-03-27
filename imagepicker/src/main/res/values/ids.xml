@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="image" type="id" />
+    <item name="back" type="id" />
+    <item name="select" type="id" />
+    <item name="vp" type="id" />
+    <item name="preview" type="id" />
+    <item name="confirm" type="id" />
+    <item name="albumTitle" type="id" />
+    <item name="albumRV" type="id" />
+    <item name="imageRV" type="id" />
+    <item name="check" type="id" />
+    <item name="scroll" type="id" />
+</resources>
