@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="scroll" type="id" />
+    <item name="vp" type="id" />
+    <item name="indicate" type="id" />
+    <item name="category" type="id" />
+</resources>

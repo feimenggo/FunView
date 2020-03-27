@@ -36,4 +36,5 @@ dependencies {
     implementation project(path: ':NetWorkMonitor')
     implementation project(path: ':loading')
     implementation project(path: ':imagepicker')
+    implementation project(path: ':kaomojiboard')
 }
