@@ -13,31 +13,15 @@ class DefaultKaomojiLoader : KaomojiLoader {
     private val mData: ArrayList<Kaomoji> = ArrayList()
 
     init {
-        mData.add(Kaomoji.valueOf("(～￣▽￣)～"))
-        mData.add(Kaomoji.valueOf("(￣３￣)a"))
-        mData.add(Kaomoji.valueOf("╰(￣▽￣)╭"))
-        mData.add(Kaomoji.valueOf("(*￣∇￣*)"))
-        mData.add(Kaomoji.valueOf("(￣▽￣)”"))
-        mData.add(Kaomoji.valueOf("(～￣▽￣)～"))
-        mData.add(Kaomoji.valueOf("(￣３￣)a"))
-        mData.add(Kaomoji.valueOf("╰(￣▽￣)╭"))
-        mData.add(Kaomoji.valueOf("(*￣∇￣*)"))
-        mData.add(Kaomoji.valueOf("(￣▽￣)”"))
-        mData.add(Kaomoji.valueOf("(～￣▽￣)～"))
-        mData.add(Kaomoji.valueOf("(￣３￣)a"))
-        mData.add(Kaomoji.valueOf("╰(￣▽￣)╭"))
-        mData.add(Kaomoji.valueOf("(*￣∇￣*)"))
-        mData.add(Kaomoji.valueOf("(￣▽￣)”"))
-        mData.add(Kaomoji.valueOf("(～￣▽￣)～"))
-        mData.add(Kaomoji.valueOf("(￣３￣)a"))
-        mData.add(Kaomoji.valueOf("╰(￣▽￣)╭"))
-        mData.add(Kaomoji.valueOf("(*￣∇￣*)"))
-        mData.add(Kaomoji.valueOf("(￣▽￣)”"))
-        mData.add(Kaomoji.valueOf("(～￣▽￣)～"))
-        mData.add(Kaomoji.valueOf("(￣３￣)a"))
-        mData.add(Kaomoji.valueOf("╰(￣▽￣)╭"))
-        mData.add(Kaomoji.valueOf("(*￣∇￣*)"))
-        mData.add(Kaomoji.valueOf("(￣▽￣)”"))
+        for (poi in 1..16) {
+            mData.add(Kaomoji.valueOf("(～￣▽￣)～"))
+        }
+        for (poi in 1..16) {
+            mData.add(Kaomoji.valueOf("(￣３￣)a"))
+        }
+        for (poi in 1..10) {
+            mData.add(Kaomoji.valueOf("ψ(｀∇´)ψ"))
+        }
     }
 
     override fun load(context: Context, categoryName: String): List<Kaomoji> {

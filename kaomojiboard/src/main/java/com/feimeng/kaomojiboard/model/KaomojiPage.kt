@@ -6,7 +6,7 @@ package com.feimeng.kaomojiboard.model
  * Description: 一页显示的颜文字
  */
 class KaomojiPage(private val data: ArrayList<Kaomoji>) {
-    fun get(position: Int): Kaomoji {
-        return data[position]
+    fun get(position: Int): Kaomoji? {
+        return if (position < data.size) data[position] else null
     }
 }

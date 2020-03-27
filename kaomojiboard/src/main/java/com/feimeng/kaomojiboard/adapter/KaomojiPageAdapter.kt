@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.feimeng.kaomojiboard.PageView
 import com.feimeng.kaomojiboard.R
+import com.feimeng.kaomojiboard.model.Kaomoji
 import com.feimeng.kaomojiboard.model.KaomojiPage
 import com.feimeng.kaomojiboard.ui.KaomojiAction
 
@@ -44,16 +45,16 @@ class KaomojiPageAdapter(private val action: KaomojiAction) : RecyclerView.Adapt
         }
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), PageView.OnClickKaomojiListener {
         lateinit var item: KaomojiPage
         val pageView: PageView = itemView as PageView
 
         init {
-            itemView.setOnClickListener(this)
+            pageView.onClickKaomojiListener = this
         }
 
-        override fun onClick(v: View?) {
-            action.clickKaomoji(item.get(0), adapterPosition)
+        override fun clickKaomoji(kaomoji: Kaomoji) {
+            action.clickKaomoji(kaomoji, adapterPosition)
         }
     }
 }
