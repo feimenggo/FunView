@@ -9,4 +9,6 @@
     <item name="single" type="id" />
     <item name="tv" type="id" />
     <item name="group" type="id" />
+    <item name="toolbar" type="id" />
+    <item name="input" type="id" />
 </resources>

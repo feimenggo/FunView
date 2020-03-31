@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".keyboarddetectory.KeyboardDetectorDemoActivity">
+
+    <EditText
+        android:id="@id/input"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="#f2f2f2"
+        android:hint="请输入内容"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:paddingLeft="15dp"
+        android:textColor="#2A2A2A"
+        android:textColorHint="#c2c2c2"
+        android:textSize="15sp" />
+</FrameLayout>
