@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.feimeng.kaomojiboard.ui.KaomojiFragment">
+    tools:context="com.feimeng.keyboard.kaomojiboard.ui.KaomojiFragment">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@id/vp"
@@ -11,14 +11,12 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="77dp" />
 
-    <LinearLayout
+    <com.feimeng.keyboard.kaomojiboard.ui.widget.IndicateView
         android:id="@id/indicate"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="50dp"
-        android:orientation="horizontal"
-        tools:ignore="UselessLeaf" />
+        android:layout_marginBottom="50dp" />
 
     <View
         android:layout_width="match_parent"
@@ -31,13 +29,12 @@
         android:id="@id/scroll"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:overScrollMode="never">
 
-        <LinearLayout
+        <com.feimeng.keyboard.kaomojiboard.ui.widget.CategoryView
             android:id="@id/category"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            tools:ignore="UselessLeaf" />
+            android:layout_height="match_parent" />
     </HorizontalScrollView>
 </FrameLayout>

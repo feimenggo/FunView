@@ -2,4 +2,9 @@
 <resources>
     <dimen name="kaomojiHeight">38dp</dimen>
     <dimen name="kaomojiVerticalSpace">8dp</dimen>
+
+    <dimen name="kb_indicatorSize">4dp</dimen>
+    <dimen name="kb_indicatorSpacing">6dp</dimen>
+
+    <dimen name="kb_categorySize">92dp</dimen>
 </resources>

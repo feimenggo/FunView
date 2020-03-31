@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.feimeng.fun.R;
-import com.feimeng.kaomojiboard.KaomojiBoard;
-import com.feimeng.kaomojiboard.loader.impl.DefaultKaomojiLoader;
+import com.feimeng.fun.kaomoji.loader.MemoryKaomojiLoader;
+import com.feimeng.keyboard.kaomojiboard.KaomojiBoard;
 
 public class KaomojiDemoActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -17,7 +17,7 @@ public class KaomojiDemoActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_caomoji_demo);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.group, KaomojiBoard.Companion.fragment(new DefaultKaomojiLoader()));
+        fragmentTransaction.replace(R.id.group, KaomojiBoard.Companion.fragment(new MemoryKaomojiLoader()));
         fragmentTransaction.commitAllowingStateLoss();
     }
 
