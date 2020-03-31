@@ -9,7 +9,7 @@ import java.util.*
 /**
  * Author: Feimeng
  * Time:   2020/3/27
- * Description: 默认的颜文字加载器
+ * Description: 内存颜文字加载器
  */
 class MemoryKaomojiLoader : KaomojiLoader {
     private val mData: ArrayList<Kaomoji> = ArrayList()
