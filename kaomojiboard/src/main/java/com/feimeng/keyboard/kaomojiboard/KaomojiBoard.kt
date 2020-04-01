@@ -1,6 +1,5 @@
 package com.feimeng.keyboard.kaomojiboard
 
-import androidx.fragment.app.Fragment
 import com.feimeng.keyboard.kaomojiboard.loader.KaomojiLoader
 import com.feimeng.keyboard.kaomojiboard.ui.KaomojiFragment
 
@@ -13,7 +12,7 @@ class KaomojiBoard private constructor(val loader: KaomojiLoader) {
     companion object {
         var instance: KaomojiBoard? = null
 
-        fun fragment(loader: KaomojiLoader): Fragment {
+        fun fragment(loader: KaomojiLoader): KaomojiFragment {
             instance = KaomojiBoard(loader)
             return KaomojiFragment.newInstance()
         }

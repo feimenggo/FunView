@@ -10,7 +10,6 @@
         android:id="@id/textarea"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
         android:background="@null"
         android:gravity="left"
         android:hint="文本区"
@@ -18,20 +17,29 @@
         android:importantForAutofill="no"
         android:inputType="textMultiLine" />
 
-    <EditText
-        android:id="@id/input"
+    <LinearLayout
+        android:id="@id/inputWrap"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="#f2f2f2"
-        android:hint="请输入内容"
-        android:imeOptions="flagNoExtractUi"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:paddingLeft="15dp"
-        android:textColor="#2A2A2A"
-        android:textColorHint="#c2c2c2"
-        android:textSize="15sp" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@id/face"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="关"
+            android:textColor="#2A2A2A"
+            android:textSize="15sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#00bbff"
+            tools:ignore="UselessLeaf" />
+    </LinearLayout>
 
     <View
         android:id="@id/floating"

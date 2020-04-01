@@ -13,4 +13,6 @@
     <item name="input" type="id" />
     <item name="textarea" type="id" />
     <item name="floating" type="id" />
+    <item name="inputWrap" type="id" />
+    <item name="face" type="id" />
 </resources>
