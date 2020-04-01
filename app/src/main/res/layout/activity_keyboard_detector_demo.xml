@@ -7,16 +7,38 @@
     tools:context=".keyboarddetectory.KeyboardDetectorDemoActivity">
 
     <EditText
+        android:id="@id/textarea"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:background="@null"
+        android:gravity="left"
+        android:hint="文本区"
+        android:imeOptions="flagNoExtractUi"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine" />
+
+    <EditText
         android:id="@id/input"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:background="#f2f2f2"
         android:hint="请输入内容"
+        android:imeOptions="flagNoExtractUi"
         android:importantForAutofill="no"
         android:inputType="text"
         android:paddingLeft="15dp"
         android:textColor="#2A2A2A"
         android:textColorHint="#c2c2c2"
         android:textSize="15sp" />
+
+    <View
+        android:id="@id/floating"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="40dp"
+        android:background="#00bbff" />
 </FrameLayout>

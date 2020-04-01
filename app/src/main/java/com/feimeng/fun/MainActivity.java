@@ -33,4 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NetWorkMonitorManager.getInstance().unregister(this);
         NetWorkMonitorManager.getInstance().onDestroy();
     }
+
+    public void addView(View... a) {
+    }
 }

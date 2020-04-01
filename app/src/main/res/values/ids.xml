@@ -11,4 +11,6 @@
     <item name="group" type="id" />
     <item name="toolbar" type="id" />
     <item name="input" type="id" />
+    <item name="textarea" type="id" />
+    <item name="floating" type="id" />
 </resources>

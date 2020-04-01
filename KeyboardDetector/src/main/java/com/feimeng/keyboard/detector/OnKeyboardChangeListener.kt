@@ -13,7 +13,6 @@ interface OnKeyboardChangeListener {
      * @param visible       键盘是否可见
      * @param height        键盘高度的像素
      * @param orientation   键盘方向 取值：Configuration.ORIENTATION_PORTRAIT or Configuration.ORIENTATION_LANDSCAPE
-     *
      */
     fun onKeyboardHeightChanged(visible: Boolean, height: Int, orientation: Int)
 }
