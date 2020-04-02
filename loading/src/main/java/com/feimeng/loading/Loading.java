@@ -183,13 +183,15 @@ public class Loading {
         /**
          * show UI for status: {@link #STATUS_LOADING}
          */
-        public void showLoading() {
+        public Status showLoading() {
             showLoadingStatus(STATUS_LOADING);
+            return this;
         }
 
-        public void showLoading(Object withData) {
+        public Status showLoading(Object withData) {
             withData(withData);
             showLoading();
+            return this;
         }
 
         /**
@@ -204,6 +206,27 @@ public class Loading {
                 @Override
                 public void run() {
                     showLoadSuccess();
+                }
+            }, delay);
+        }
+
+        public void showLoadSuccess(final Runnable animFinish) {
+            showLoadingStatus(STATUS_LOAD_SUCCESS);
+            if (mSuccessRemoveDuration > 0 && animFinish != null) {
+                getWrapper().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        animFinish.run();
+                    }
+                }, mSuccessRemoveDuration);
+            }
+        }
+
+        public void showLoadSuccess(int delay, final Runnable animFinish) {
+            getWrapper().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showLoadSuccess(animFinish);
                 }
             }, delay);
         }
@@ -286,13 +309,14 @@ public class Loading {
                         mWrapper.addView(view);
                         if (mViewLayout != null) {
                             view.setLayoutParams(mViewLayout);
-                        } else {
-                            ViewGroup.LayoutParams lp = view.getLayoutParams();
-                            if (lp != null) {
-                                lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                                lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
-                            }
                         }
+//                        else {
+//                            ViewGroup.LayoutParams lp = view.getLayoutParams();
+//                            if (lp != null) {
+//                                lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+//                                lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
+//                            }
+//                        }
                     } else if (mWrapper.indexOfChild(view) != mWrapper.getChildCount() - 1) {
                         // make sure loading status view at the front
                         view.bringToFront();
