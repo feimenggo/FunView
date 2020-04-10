@@ -6,6 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@id/keyboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="键盘高度" />
+
+    <Button
+        android:id="@id/kaomoji"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/keyboard"
+        android:text="颜文字面板" />
+
+    <Button
+        android:id="@id/imagePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/kaomoji"
+        android:text="图片选择" />
+
+    <Button
+        android:id="@id/imageViewer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imagePicker"
+        android:text="图片浏览" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

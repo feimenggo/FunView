@@ -15,4 +15,8 @@
     <item name="floating" type="id" />
     <item name="inputWrap" type="id" />
     <item name="face" type="id" />
+    <item name="keyboard" type="id" />
+    <item name="imagePicker" type="id" />
+    <item name="kaomoji" type="id" />
+    <item name="imageViewer" type="id" />
 </resources>

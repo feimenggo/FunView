@@ -4,7 +4,9 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.LinearInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 
@@ -206,7 +208,7 @@ open class KeyboardLayoutHelper : OnKeyboardChangeListener {
         if (mSmoothViews != null) {
             if (visible) {
                 mSmoothAnimator = ValueAnimator.ofInt(0, height)
-                mSmoothAnimator!!.interpolator = DecelerateInterpolator()
+                mSmoothAnimator!!.interpolator = LinearInterpolator()
                 mSmoothAnimator!!.duration = 220
             } else {
                 mSmoothAnimator = ValueAnimator.ofInt(height, 0)
@@ -225,8 +227,8 @@ open class KeyboardLayoutHelper : OnKeyboardChangeListener {
         if (mPanelView != null) {
             if (visible) {
                 mPanelAnimator = ValueAnimator.ofInt(mPanelView!!.height, 0)
-                mPanelAnimator!!.interpolator = DecelerateInterpolator()
-                mPanelAnimator!!.duration = 220
+                mPanelAnimator!!.interpolator = LinearInterpolator()
+                mPanelAnimator!!.duration = 0
             } else {
                 mPanelAnimator = ValueAnimator.ofInt(0, mPanelView!!.height)
                 mPanelAnimator!!.duration = 350
