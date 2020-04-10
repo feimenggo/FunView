@@ -43,14 +43,14 @@ public class DisplayActivity extends AppCompatActivity {
 
     String[] normalImageUlr = new String[]{
             "http://img1.juimg.com/140908/330608-140ZP1531651.jpg",
-            "https://github.com/moyokoo/Media/blob/master/diooto2.jpg?raw=true",
-            "https://github.com/moyokoo/Media/blob/master/diooto3.jpg?raw=true",
-            "https://github.com/moyokoo/Media/blob/master/diooto4.jpg?raw=true",
-            "https://github.com/moyokoo/Media/blob/master/diooto5.jpg?raw=true",
-            "https://github.com/moyokoo/Media/blob/master/diooto6.jpg?raw=true",
-            "https://github.com/moyokoo/Media/blob/master/diooto7.png?raw=true",
-            "https://github.com/moyokoo/Media/blob/master/diooto8.png?raw=true",
-            "https://github.com/moyokoo/Media/blob/master/diooto9.jpg?raw=true",
+            "https://img.mozhes.com/images/1586455370426.jpg?x-oss-process=style/thumbnail",
+            "https://img.mozhes.com/images/1586455367231.jpg?x-oss-process=style/thumbnail",
+            "https://img.mozhes.com/images/1586455366872.jpg?x-oss-process=style/thumbnail",
+            "https://img.mozhes.com/images/1586455364922.jpg?x-oss-process=style/thumbnail",
+            "https://img.mozhes.com/images/1586455366201.jpg?x-oss-process=style/thumbnail",
+            "https://img.mozhes.com/images/1586455371304.jpg?x-oss-process=style/thumbnail",
+            "https://img.mozhes.com/images/1586455369355.jpg?x-oss-process=style/thumbnail",
+            "https://img.mozhes.com/images/1586455376907.jpg?x-oss-process=style/thumbnail"
     };
 
     String[] thumbs = new String[]{

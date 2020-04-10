@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,7 +134,12 @@ public class ImageFragment extends Fragment {
                                 ImageActivity.iProgress.getProgressView(position));
                     }
                 } else if (type == ViewerConfig.PHOTO && view.getContentView() instanceof SketchImageView) {
-                    showImage();
+                    DiskCache diskCache = Sketch.with(requireContext()).getConfiguration().getDiskCache();
+                    if (diskCache.exist(url)) {
+                        showImage();
+                    } else {
+                        loadWithoutCache();
+                    }
                 }
             }
         });
@@ -166,18 +170,12 @@ public class ImageFragment extends Fragment {
                 }
             }
         });
-
+        mDragView.putData(contentViewOriginModel.getLeft(), contentViewOriginModel.getTop(), contentViewOriginModel.getWidth(), contentViewOriginModel.getHeight());
         if (((ImageActivity) requireActivity()).isNeedAnimationForClickPosition(position)) { // 过渡图片，需要显示动画
             ((ImageActivity) requireActivity()).refreshNeedAnimationForClickPosition();
-            mDragView.putData(contentViewOriginModel.getLeft(), contentViewOriginModel.getTop(), contentViewOriginModel.getWidth(), contentViewOriginModel.getHeight());
             mDragView.show(!shouldShowAnimation);
         } else {
-            DiskCache diskCache = Sketch.with(context).getConfiguration().getDiskCache();
-            if (diskCache.exist(url)) {
-                showImage();
-            } else {
-                loadWithoutCache();
-            }
+            loadImage();
         }
     }
 
@@ -254,21 +252,27 @@ public class ImageFragment extends Fragment {
     private LoadRequest loadRequest;
 
     private void loadWithoutCache() {
+        if (ImageActivity.iProgress != null) {
+            mLoadingView.setTag(new Runnable() {
+                @Override
+                public void run() {
+                    mLoadingView.setVisibility(View.VISIBLE);
+                }
+            });
+            mLoadingView.postDelayed((Runnable) mLoadingView.getTag(), 100); // 延迟显示，防止因为网速太快，进度条一闪而过的情况
+            ImageActivity.iProgress.onStart(position);
+        }
         loadRequest = Sketch.with(requireContext()).load(url, new LoadListener() {
             @Override
             public void onStarted() {
-                if (ImageActivity.iProgress != null) {
-                    Log.d("nodawang", "onStarted thread:" + Thread.currentThread());
-                    mLoadingView.setVisibility(View.VISIBLE);
-                    ImageActivity.iProgress.onStart(position);
-                }
             }
 
             @Override
             public void onCompleted(@NonNull LoadResult result) {
-                mLoadingView.setVisibility(View.GONE);
                 if (ImageActivity.iProgress != null) {
-                    Log.d("nodawang", "onCompleted thread:" + Thread.currentThread());
+                    mLoadingView.removeCallbacks((Runnable) mLoadingView.getTag());
+                    mLoadingView.setTag(null);
+                    mLoadingView.setVisibility(View.GONE);
                     ImageActivity.iProgress.onFinish(position);
                 }
                 if (result.getGifDrawable() != null) {
@@ -277,7 +281,13 @@ public class ImageFragment extends Fragment {
                 int w = result.getBitmap().getWidth();
                 int h = result.getBitmap().getHeight();
                 mDragView.notifySize(w, h);
-                mImageView.displayImage(url);
+                Sketch.with(requireContext()).display(url, mImageView).loadingImage(new StateImage() {
+                    @Nullable
+                    @Override
+                    public Drawable getDrawable(@NonNull Context context, @NonNull SketchView sketchView, @NonNull DisplayOptions displayOptions) {
+                        return mImageView.getDrawable(); // 解决显示的时候闪烁问题
+                    }
+                }).commit();
             }
 
             @Override
@@ -294,7 +304,7 @@ public class ImageFragment extends Fragment {
             @Override
             public void onUpdateDownloadProgress(int totalLength, int completedLength) {
                 if (ImageActivity.iProgress != null) {
-                    Log.d("nodawang", "totalLength:" + totalLength + " completedLength:" + completedLength);
+//                    Log.d("nodawang", "totalLength:" + totalLength + " completedLength:" + completedLength);
                     int ratio = (int) (completedLength / (float) totalLength * 100);
                     ImageActivity.iProgress.onProgress(position, ratio);
                 }
@@ -350,9 +360,9 @@ public class ImageFragment extends Fragment {
     protected void onUserVisibleChanged(boolean isVisibleToUser) {
         // 不可见的时候暂停分块显示器，节省内存，可见的时候恢复
         if (mImageView != null && mImageView.isZoomEnabled()) {
-            mImageView.getZoomer().getBlockDisplayer().setPause(!isVisibleToUser);
+            Objects.requireNonNull(mImageView.getZoomer()).getBlockDisplayer().setPause(!isVisibleToUser);
             Drawable lastDrawable = SketchUtils.getLastDrawable(mImageView.getDrawable());
-            if (lastDrawable != null && (lastDrawable instanceof SketchGifDrawable)) {
+            if ((lastDrawable instanceof SketchGifDrawable)) {
                 ((SketchGifDrawable) lastDrawable).followPageVisible(isVisibleToUser, false);
             }
         }

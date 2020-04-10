@@ -6,13 +6,11 @@
     <com.feimeng.imageviewer.DragView
         android:id="@id/drag"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:layout_height="match_parent" />
 
-    <com.feimeng.fun.imageviewer.FrameLayoutTest
+    <FrameLayout
         android:id="@id/loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#00bbff"
         android:visibility="gone" />
 </FrameLayout>
