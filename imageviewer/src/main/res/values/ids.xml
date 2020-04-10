@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="dr_photo_dio_viewpager_id" type="id" />
+    <item name="dr_photo_dio_status_id" type="id" />
+    <item name="dr_photo_dio_fake_status_id" type="id" />
+    <item name="drag" type="id" />
+    <item name="loading" type="id" />
+</resources>

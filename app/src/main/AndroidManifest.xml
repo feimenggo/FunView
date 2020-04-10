@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity android:name=".MainActivity">
             <!--    <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
@@ -30,21 +31,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
-        <activity android:name=".kaomoji.KaomojiDemoActivity">
-        <!--    <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
-        <activity
-            android:name=".keyboarddetectory.KeyboardDetectorDemoActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing">
+        <activity android:name=".imageviewer.ImageViewerDemoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".imageviewer.DisplayActivity"
+            android:configChanges="orientation" />
+        <activity android:name=".kaomoji.KaomojiDemoActivity">
+            <!--    <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".keyboarddetectory.KeyboardDetectorDemoActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing">
+            <!--            <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>-->
         </activity>
 
         <activity android:name=".loading.LoadingDemoActivity" />

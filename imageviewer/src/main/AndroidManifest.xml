@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.feimeng.imageviewer">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <activity
+            android:name=".ImageActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/Transparent" />
+    </application>
+</manifest>
