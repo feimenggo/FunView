@@ -3,10 +3,8 @@ package com.feimeng.imageviewer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.os.Build;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -22,7 +20,6 @@ import com.feimeng.imageviewer.interfaces.CircleIndexIndicator;
 import com.feimeng.imageviewer.interfaces.DefaultPercentProgress;
 import com.feimeng.imageviewer.interfaces.IIndicator;
 import com.feimeng.imageviewer.interfaces.IProgress;
-import com.feimeng.imageviewer.tools.SizeKit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,16 +41,6 @@ public class ImageViewer {
         return this;
     }
 
-    public ImageViewer fullscreen(boolean isFullScreen) {
-        this.mConfig.setFullScreen(isFullScreen);
-        return this;
-    }
-
-    public ImageViewer indicatorVisibility(int visibility) {
-        this.mConfig.setIndicatorVisibility(visibility);
-        return this;
-    }
-
     public ImageViewer urls(String[] imageUrls) {
         this.mConfig.setImageUrls(imageUrls);
         return this;
@@ -61,11 +48,6 @@ public class ImageViewer {
 
     public ImageViewer type(int type) {
         this.mConfig.setType(type);
-        return this;
-    }
-
-    public ImageViewer immersive(boolean immersive) {
-        this.mConfig.setImmersive(immersive);
         return this;
     }
 
@@ -129,7 +111,7 @@ public class ImageViewer {
     }
 
     public ImageViewer views(View[] views) {
-        int statusBarHeight = SizeKit.getStatusBarHeight(mContext);
+        int statusBarHeight = 0;
         List<ContentViewOriginModel> list = new ArrayList<>();
         for (View imageView : views) {
             ContentViewOriginModel imageBean = new ContentViewOriginModel();
@@ -154,24 +136,9 @@ public class ImageViewer {
 
 
     public ImageViewer start() {
-        if (!mConfig.isImmersive()) {
-            Window window = getWindow(mContext);
-            if ((window.getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN)
-                    == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
-                mConfig.setFullScreen(true);
-            }
-            if (!mConfig.isFullScreen()) {
-                window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                }
-            }
+        if (mConfig.getImageUrls().length != mConfig.getContentViewOriginModels().size()) {
+            throw new IllegalArgumentException("图片与地址数目不一致");
         }
-
         if (ImageActivity.iIndicator == null) {
             setIndicator(new CircleIndexIndicator());
         }

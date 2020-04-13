@@ -44,23 +44,21 @@ public class ImageFragment extends Fragment {
     private int type;
     private int position;
     private String url;
-    private boolean shouldShowAnimation = false;
     private ContentViewOriginModel contentViewOriginModel;
 
-    public DragView getDragView() {
-        return mDragView;
-    }
-
-    public static ImageFragment newInstance(String url, int position, int type, boolean shouldShowAnimation, ContentViewOriginModel contentViewOriginModel) {
+    public static ImageFragment newInstance(String url, int position, int type, ContentViewOriginModel contentViewOriginModel) {
         Bundle args = new Bundle();
         args.putInt("type", type);
         args.putInt("position", position);
         args.putString("url", url);
-        args.putBoolean("shouldShowAnimation", shouldShowAnimation);
         args.putParcelable("model", contentViewOriginModel);
         ImageFragment fragment = new ImageFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public DragView getDragView() {
+        return mDragView;
     }
 
     @Override
@@ -70,7 +68,6 @@ public class ImageFragment extends Fragment {
         type = arguments.getInt("type");
         position = arguments.getInt("position");
         url = arguments.getString("url");
-        shouldShowAnimation = arguments.getBoolean("shouldShowAnimation");
         contentViewOriginModel = arguments.getParcelable("model");
     }
 
@@ -173,7 +170,7 @@ public class ImageFragment extends Fragment {
         mDragView.putData(contentViewOriginModel.getLeft(), contentViewOriginModel.getTop(), contentViewOriginModel.getWidth(), contentViewOriginModel.getHeight());
         if (((ImageActivity) requireActivity()).isNeedAnimationForClickPosition(position)) { // 过渡图片，需要显示动画
             ((ImageActivity) requireActivity()).refreshNeedAnimationForClickPosition();
-            mDragView.show(!shouldShowAnimation);
+            mDragView.show(false);
         } else {
             loadImage();
         }

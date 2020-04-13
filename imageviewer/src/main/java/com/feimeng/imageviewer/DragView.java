@@ -183,69 +183,83 @@ public class DragView extends FrameLayout {
 
     public void backToMin() {
         if (isAnimating) return;
-        //到最小时,先把imageView的大小设置为imageView可见的大小,而不是包含黑色空隙部分
-        if (isPhoto) {
-            // 注意:这里 imageWrapper.getHeight() 获取的高度 是经过拖动缩放后的
-            float draggingToReleaseScale = imageWrapper.getHeight() / (float) screenHeight;
-            if (imageWrapper.getHeight() != imageHeightOfAnimatorEnd) {
-                releaseHeight = (int) (draggingToReleaseScale * imageHeightOfAnimatorEnd);
-            } else {
-                releaseHeight = imageWrapper.getHeight();
-            }
-            if (imageWrapper.getWidth() != imageWidthOfAnimatorEnd) {
-                releaseWidth = (int) (draggingToReleaseScale * imageWidthOfAnimatorEnd);
-            } else {
-                releaseWidth = imageWrapper.getWidth();
-            }
-            if (imageWrapper.getMarginTop() != imageTopOfAnimatorEnd) {
-                releaseY = imageWrapper.getMarginTop() + (int) (draggingToReleaseScale * imageTopOfAnimatorEnd);
-            } else {
-                releaseY = imageWrapper.getMarginTop();
-            }
-            if (imageWrapper.getMarginLeft() != imageLeftOfAnimatorEnd) {
-                releaseLeft = imageWrapper.getMarginLeft() + (int) (draggingToReleaseScale * imageLeftOfAnimatorEnd);
+        if (mOriginWidth > 0 && mOriginHeight > 0) {
+            // 到最小时,先把imageView的大小设置为imageView可见的大小,而不是包含黑色空隙部分
+            if (isPhoto) {
+                // 注意:这里 imageWrapper.getHeight() 获取的高度 是经过拖动缩放后的
+                float draggingToReleaseScale = imageWrapper.getHeight() / (float) screenHeight;
+                if (imageWrapper.getHeight() != imageHeightOfAnimatorEnd) {
+                    releaseHeight = (int) (draggingToReleaseScale * imageHeightOfAnimatorEnd);
+                } else {
+                    releaseHeight = imageWrapper.getHeight();
+                }
+                if (imageWrapper.getWidth() != imageWidthOfAnimatorEnd) {
+                    releaseWidth = (int) (draggingToReleaseScale * imageWidthOfAnimatorEnd);
+                } else {
+                    releaseWidth = imageWrapper.getWidth();
+                }
+                if (imageWrapper.getMarginTop() != imageTopOfAnimatorEnd) {
+                    releaseY = imageWrapper.getMarginTop() + (int) (draggingToReleaseScale * imageTopOfAnimatorEnd);
+                } else {
+                    releaseY = imageWrapper.getMarginTop();
+                }
+                if (imageWrapper.getMarginLeft() != imageLeftOfAnimatorEnd) {
+                    releaseLeft = imageWrapper.getMarginLeft() + (int) (draggingToReleaseScale * imageLeftOfAnimatorEnd);
+                } else {
+                    releaseLeft = imageWrapper.getMarginLeft();
+                }
+                imageWrapper.setWidth(releaseWidth);
+                imageWrapper.setHeight(releaseHeight);
+                imageWrapper.setMarginTop((int) releaseY);
+                imageWrapper.setMarginLeft(releaseLeft);
             } else {
                 releaseLeft = imageWrapper.getMarginLeft();
+                releaseY = imageWrapper.getMarginTop();
+                releaseWidth = imageWrapper.getWidth();
+                releaseHeight = imageWrapper.getHeight();
             }
-            imageWrapper.setWidth(releaseWidth);
-            imageWrapper.setHeight(releaseHeight);
-            imageWrapper.setMarginTop((int) releaseY);
-            imageWrapper.setMarginLeft(releaseLeft);
-        } else {
-            releaseLeft = imageWrapper.getMarginLeft();
-            releaseY = imageWrapper.getMarginTop();
-            releaseWidth = imageWrapper.getWidth();
-            releaseHeight = imageWrapper.getHeight();
-        }
 
-        if ((isLongHeightImage || isLongWidthImage) && getContentView() instanceof SketchImageView) {
-            SketchImageView sketchImageView = (SketchImageView) getContentView();
-            if (sketchImageView.getZoomer() != null) {
-                //如果是长图 则重新更改宽高 因为长图缩放到最小时需要大小变化
-                float ratio = sketchImageView.getZoomer().getZoomScale() / sketchImageView.getZoomer().getMaxZoomScale();
-                if (isLongHeightImage) {
-                    int tempWidth = (int) (screenWidth * ratio);
-                    releaseLeft = releaseLeft + (releaseWidth - tempWidth) / 2;
-                    releaseWidth = tempWidth;
-                } else {
-                    int tempHeight = (int) (screenHeight * ratio);
-                    releaseY = releaseY + (releaseHeight - tempHeight) / 2;
-                    releaseHeight = tempHeight;
+            if ((isLongHeightImage || isLongWidthImage) && getContentView() instanceof SketchImageView) {
+                SketchImageView sketchImageView = (SketchImageView) getContentView();
+                if (sketchImageView.getZoomer() != null) {
+                    //如果是长图 则重新更改宽高 因为长图缩放到最小时需要大小变化
+                    float ratio = sketchImageView.getZoomer().getZoomScale() / sketchImageView.getZoomer().getMaxZoomScale();
+                    if (isLongHeightImage) {
+                        int tempWidth = (int) (screenWidth * ratio);
+                        releaseLeft = releaseLeft + (releaseWidth - tempWidth) / 2;
+                        releaseWidth = tempWidth;
+                    } else {
+                        int tempHeight = (int) (screenHeight * ratio);
+                        releaseY = releaseY + (releaseHeight - tempHeight) / 2;
+                        releaseHeight = tempHeight;
+                    }
+                    changeImageViewToCenterCrop();
                 }
-                changeImageViewToCenterCrop();
             }
+            changeImageViewToCenterCrop();
+            ValueAnimator valueAnimator = ValueAnimator.ofFloat(releaseY, mOriginTop);
+            valueAnimator.setInterpolator(new DecelerateInterpolator());
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float value = (float) animation.getAnimatedValue();
+                    min2NormalAndDrag2Min(value, releaseY, mOriginTop, releaseLeft, mOriginLeft, releaseWidth, mOriginWidth, releaseHeight, mOriginHeight);
+                }
+            });
+            valueAnimator.setDuration(animationDuration).start();
+        } else {
+            ValueAnimator valueAnimator = ValueAnimator.ofFloat(1, 0);
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    float alpha = (Float) valueAnimator.getAnimatedValue();
+                    contentLayout.setAlpha(alpha);
+                }
+            });
+            valueAnimator.setDuration(animationDuration);
+            valueAnimator.start();
         }
-        changeImageViewToCenterCrop();
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(releaseY, mOriginTop);
-        valueAnimator.setInterpolator(new DecelerateInterpolator());
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float value = (float) animation.getAnimatedValue();
-                min2NormalAndDrag2Min(value, releaseY, mOriginTop, releaseLeft, mOriginLeft, releaseWidth, mOriginWidth, releaseHeight, mOriginHeight);
-            }
-        });
-        valueAnimator.setDuration(animationDuration).start();
+//        contentLayout.setClipChildren(true);
         if (onReleaseListener != null) {
             onReleaseListener.onRelease(false, true);
         }
@@ -270,6 +284,7 @@ public class DragView extends FrameLayout {
         realWidth = width;
         realHeight = height;
 
+//        Log.d("nodawang", "notifySize w:" + realWidth + " h:" + realHeight);
 
         if (realWidth == 0 || realHeight == 0) {
             return;
@@ -313,6 +328,7 @@ public class DragView extends FrameLayout {
                 setImageDataOfAnimatorEnd();
                 changeContentViewToFullscreen();
             }
+//            contentLayout.setClipChildren(false);
             return;
         }
 
@@ -328,7 +344,7 @@ public class DragView extends FrameLayout {
                     if (endWidth - targetImageWidth == 0) {
                         imageWrapper.setWidth(targetImageWidth);
                         imageWrapper.setHeight(targetImageHeight);
-                        imageWrapper.setMarginLeft((int) (startLeft));
+                        imageWrapper.setMarginLeft(startLeft);
                     } else {
                         float yPercent = (value - targetImageWidth) / (float) (endWidth - targetImageWidth);
                         float xOffset = yPercent * (endLeft - startLeft);
@@ -399,29 +415,27 @@ public class DragView extends FrameLayout {
         mOriginTop = top;
         mOriginWidth = originWidth;
         mOriginHeight = originHeight;
+//        Log.d("nodawang", "w:" + realWidth + " h:" + realHeight);
     }
 
     public void show(boolean showImmediately) {
         setVisibility(View.VISIBLE);
-        mAlpha = showImmediately ? mAlpha = 1 : 0;
+        mAlpha = showImmediately ? 1 : 0;
         getLocation(mOriginWidth, mOriginHeight, showImmediately);
     }
 
-
     private void getLocation(float minViewWidth, float minViewHeight, final boolean showImmediately) {
-        int[] locationImage = new int[2];
-        contentLayout.getLocationOnScreen(locationImage);
-        float targetSize;
+//        int[] locationImage = new int[2];
+//        contentLayout.getLocationOnScreen(locationImage);
         targetImageWidth = screenWidth;
-        if (realHeight != 0 && realWidth != 0) {
+        if (realWidth != 0 && realHeight != 0) {
             notifySize(realWidth, realHeight, true);
             return;
         } else {
-            targetSize = minViewHeight / minViewWidth;
+            float targetSize = minViewHeight / minViewWidth;
             targetImageHeight = (int) (screenWidth * targetSize);
             targetImageTop = (screenHeight - targetImageHeight) / 2;
         }
-
 
         imageWrapper.setWidth(mOriginWidth);
         imageWrapper.setHeight(mOriginHeight);
@@ -435,6 +449,7 @@ public class DragView extends FrameLayout {
             mAlpha = 1f;
             backgroundView.setAlpha(mAlpha);
             min2NormalAndDrag2Min(targetImageTop, 0, targetImageWidth, targetImageHeight);
+//            contentLayout.setClipChildren(false);
             if (onShowFinishListener != null) {
                 onShowFinishListener.showFinish(this, true);
             }
@@ -452,6 +467,7 @@ public class DragView extends FrameLayout {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     isAnimating = false;
+//                    contentLayout.setClipChildren(false);
                     if (onShowFinishListener != null) {
                         onShowFinishListener.showFinish(DragView.this, false);
                     }

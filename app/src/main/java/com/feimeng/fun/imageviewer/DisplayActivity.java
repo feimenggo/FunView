@@ -86,7 +86,7 @@ public class DisplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         context = this;
         setContentView(R.layout.activity_display);
-        ImmersionBar.with(this).statusBarColor("#000000").init();
+        ImmersionBar.with(this).statusBarColor("#00bbff").init();
         activityPosition = getIntent().getIntExtra("position", 0);
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
@@ -148,7 +148,6 @@ public class DisplayActivity extends AppCompatActivity {
                             .position(holder.getAdapterPosition())
                             .views(holder.srcImageView)
                             .type(ViewerConfig.VIDEO)
-                            .immersive(isImmersive)
                             .setProgress(new DefaultCircleProgress())
                             //提供视频View
                             .onProvideVideoView(() -> new VideoView(context))
@@ -177,7 +176,6 @@ public class DisplayActivity extends AppCompatActivity {
                     ImageViewer imageViewer = new ImageViewer(context)
                             .urls(normalImageUlr[position])
                             .type(ViewerConfig.PHOTO)
-                            .immersive(isImmersive)
                             .position(0)
                             .views(views[holder.getAdapterPosition()])
                             .loadPhotoBeforeShowBigImage((sketchImageView, position1) -> {
@@ -186,10 +184,8 @@ public class DisplayActivity extends AppCompatActivity {
                             .start();
                 } else {
                     new ImageViewer(context)
-                            .indicatorVisibility(View.GONE)
                             .urls(activityPosition == 2 ? longImageUrl : normalImageUlr)
                             .type(ViewerConfig.PHOTO)
-                            .immersive(isImmersive)
                             .position(holder.getAdapterPosition(), 1)
                             .views(mRecyclerView, R.id.srcImageView)
                             .loadPhotoBeforeShowBigImage((sketchImageView, poi) -> {
