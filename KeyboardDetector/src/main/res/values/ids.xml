@@ -3,4 +3,5 @@
     <item name="anim" type="id" />
     <item name="animMarginBottom" type="id" />
     <item name="animMarginBottomVisible" type="id" />
+    <item name="keyboardDetectorPanel" type="id" />
 </resources>

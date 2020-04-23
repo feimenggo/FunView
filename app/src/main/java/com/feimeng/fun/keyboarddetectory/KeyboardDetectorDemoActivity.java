@@ -42,7 +42,8 @@ public class KeyboardDetectorDemoActivity extends AppCompatActivity implements K
 //        fragmentTransaction.commitAllowingStateLoss();
         mDetector = new KeyboardDetector(this);
         mDetector.addKeyboardChangeListener(mKeyboardLayoutHelper = new KeyboardLayoutHelper().addSmoothView(mFloatingView)
-                .addInstantView(mTextareaView, 0, getResources().getDimensionPixelOffset(R.dimen.toolkitHeight)).enablePanel(this, mTextareaView, mInputWrap, this));
+                .addInstantView(mTextareaView, 0, getResources().getDimensionPixelOffset(R.dimen.toolkitHeight))
+                .enablePanel(this, mInputWrap, getResources().getDimensionPixelOffset(R.dimen.toolkitHeight), this));
         mDetector.start(mInputWrap);
     }
 
@@ -55,11 +56,11 @@ public class KeyboardDetectorDemoActivity extends AppCompatActivity implements K
     @Override
     public void onKeyboardVisibility(boolean show, int keyboardHeight) {
         Log.d("nodawang", "onKeyboardToggle:" + show);
-        View childAt = mInputWrap.getChildAt(1);
-        if (childAt.getLayoutParams().height != keyboardHeight) {
-            childAt.getLayoutParams().height = keyboardHeight;
-            childAt.requestLayout();
-        }
+//        View childAt = mInputWrap.getChildAt(1);
+//        if (childAt.getLayoutParams().height != keyboardHeight) {
+//            childAt.getLayoutParams().height = keyboardHeight;
+//            childAt.requestLayout();
+//        }
     }
 
     @Override

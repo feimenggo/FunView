@@ -4,7 +4,6 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.view.inputmethod.InputMethodManager
@@ -26,13 +25,12 @@ open class KeyboardLayoutHelper : OnKeyboardChangeListener {
 
     private var mKeyboardHeight: Int = 0
 
-    private var mLayoutVisible: Boolean = false
-    private var mPanelVisible: Boolean = false
-    private var mKeyboardVisible: Boolean = false
+    private var mLayoutVisible: Boolean = false // 面板或者键盘是否显示
+    private var mPanelVisible: Boolean = false // 面板是否显示
+    private var mKeyboardVisible: Boolean = false // 键盘是否显示
     private var mInputManager: InputMethodManager? = null
-    private var mInputView: EditText? = null
     private var mPanelView: View? = null // 切换移动
-
+    private var mPanelDistance: Int = 0
     private var mCallback: OnKeyboardCallback? = null
 
     fun addInstantView(view: View, marginBottom: Int, marginBottomVisible: Int): KeyboardLayoutHelper {
@@ -54,12 +52,21 @@ open class KeyboardLayoutHelper : OnKeyboardChangeListener {
         return this
     }
 
-    fun enablePanel(context: Context, inputView: EditText, panel: View, callback: OnKeyboardCallback): KeyboardLayoutHelper {
+    fun enablePanel(context: Context, panel: View, showDistance: Int, callback: OnKeyboardCallback): KeyboardLayoutHelper {
         mInputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        mInputView = inputView
         mPanelView = panel
+        mPanelDistance = showDistance
         mCallback = callback
+        // 初始化位置
+        panel.translationY = 10000.toFloat()
         return this
+    }
+
+    /**
+     * 获取面板或者键盘是否显示
+     */
+    fun isShowing(): Boolean {
+        return mLayoutVisible
     }
 
     /**
@@ -121,7 +128,7 @@ open class KeyboardLayoutHelper : OnKeyboardChangeListener {
     }
 
     private fun hideKeyboard() {
-        mInputManager!!.hideSoftInputFromWindow(mInputView!!.applicationWindowToken, 0)
+        mInputManager!!.hideSoftInputFromWindow(mPanelView!!.applicationWindowToken, 0)
     }
 
     private fun onPanelVisibleChange(visible: Boolean) {
@@ -144,16 +151,6 @@ open class KeyboardLayoutHelper : OnKeyboardChangeListener {
         handleLayoutVisible(false, mKeyboardHeight)
     }
 
-    private fun initPanel() {
-        if (mPanelView == null) return
-        mPanelView!!.translationY = 10000.toFloat()
-        if (mKeyboardHeight > 0) {
-            mPanelView!!.post {
-                mPanelView!!.translationY = mPanelView!!.height.toFloat()
-            }
-        }
-    }
-
     /**
      * 键盘可见性改变
      */
@@ -162,7 +159,6 @@ open class KeyboardLayoutHelper : OnKeyboardChangeListener {
         onKeyboardVisibleChange(visible)
 
         if (mIgnoreInitChange != null) {
-            initPanel()
             if (mIgnoreInitChange as Boolean) {
                 mIgnoreInitChange = null
                 return
@@ -209,7 +205,7 @@ open class KeyboardLayoutHelper : OnKeyboardChangeListener {
             if (visible) {
                 mSmoothAnimator = ValueAnimator.ofInt(0, height)
                 mSmoothAnimator!!.interpolator = LinearInterpolator()
-                mSmoothAnimator!!.duration = 220
+                mSmoothAnimator!!.duration = 350
             } else {
                 mSmoothAnimator = ValueAnimator.ofInt(height, 0)
                 mSmoothAnimator!!.duration = 350
@@ -223,12 +219,19 @@ open class KeyboardLayoutHelper : OnKeyboardChangeListener {
             mSmoothAnimator!!.start()
         }
 
-        // 切换移动
+        // 面板式移动
         if (mPanelView != null) {
             if (visible) {
-                mPanelAnimator = ValueAnimator.ofInt(mPanelView!!.height, 0)
-                mPanelAnimator!!.interpolator = LinearInterpolator()
-                mPanelAnimator!!.duration = 0
+                val panelView = mPanelView!!.findViewById<View>(R.id.keyboardDetectorPanel)
+                if (panelView.layoutParams.height != height) {
+                    panelView.layoutParams.height = height
+                    panelView.requestLayout()
+                }
+
+                mPanelAnimator = ValueAnimator.ofInt(mPanelDistance, 0)
+                mPanelAnimator!!.interpolator = DecelerateInterpolator()
+                mPanelAnimator!!.duration = 400
+                mPanelAnimator!!.startDelay = 80
             } else {
                 mPanelAnimator = ValueAnimator.ofInt(0, mPanelView!!.height)
                 mPanelAnimator!!.duration = 350
