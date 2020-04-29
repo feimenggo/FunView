@@ -3,13 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#A6B3C1"
     tools:layout_height="90dp"
     tools:layout_width="90dp">
 
-    <ImageView
-        android:id="@id/image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/icon_capture_photo" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        tools:drawableTop="@drawable/ip_icon_photo_capture"
+        tools:text="拍摄" />
 </com.feimeng.imagepicker.ui.widget.SquareFrameLayout>

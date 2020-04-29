@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        tools:src="@drawable/cover" />
+        tools:src="#DCE6EF" />
 
     <TextView
         android:id="@id/check"
@@ -19,12 +19,11 @@
         android:layout_height="20dp"
         android:layout_gravity="right"
         android:layout_margin="5dp"
-        android:background="@drawable/selector_picker_picture_check"
         android:gravity="center"
         android:scaleType="center"
-        android:textColor="@drawable/selector_picker_picture_check"
+        android:textColor="@color/white"
         android:textSize="12sp"
-        tools:text="2" />
+        tools:background="@drawable/ip_icon_photo_unchosen" />
 
     <TextView
         android:id="@id/videoDuration"

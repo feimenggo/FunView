@@ -13,7 +13,7 @@
         android:layout_height="60dp"
         android:layout_gravity="center_vertical"
         android:scaleType="centerCrop"
-        tools:src="@drawable/cover" />
+        tools:src="#DCE6EF" />
 
     <TextView
         android:id="@id/title"

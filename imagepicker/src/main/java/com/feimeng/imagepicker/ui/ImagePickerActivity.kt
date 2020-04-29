@@ -182,7 +182,6 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
         mAlbumTitleView.text = album.getDisplayName(this)
         if (album.isAll && album.isEmpty) {
             Toast.makeText(this, "没有图片", Toast.LENGTH_SHORT).show()
-        } else {
         }
     }
 

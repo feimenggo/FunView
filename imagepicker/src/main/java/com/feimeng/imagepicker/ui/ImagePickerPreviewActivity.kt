@@ -173,7 +173,7 @@ class ImagePickerPreviewActivity : BaseImagePickerActivity(), ViewPager.OnPageCh
     }
 
     private fun updateCheck() {
-        mCheckView.setImageDrawable(ColorDrawable(if (mCheckView.isSelected) Color.GREEN else Color.RED))
+        mCheckView.setImageResource(if (mCheckView.isSelected) R.drawable.ip_icon_photo_big_chosen else R.drawable.ip_icon_photo_big_unchosen)
     }
 
     @SuppressLint("SetTextI18n")

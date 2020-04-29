@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.feimeng.imagepicker.R
@@ -73,7 +74,7 @@ class AlbumMediaAdapter(private val action: ImagePickerAction) : RecyclerView.Ad
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val context = holder.itemView.context
         if (holder is CaptureViewHolder) {
-
+            holder.update(context)
         } else if (holder is MediaViewHolder) {
             holder.item = mData[position]
             holder.updateImage(context)
@@ -85,7 +86,10 @@ class AlbumMediaAdapter(private val action: ImagePickerAction) : RecyclerView.Ad
         if (payloads.isEmpty()) {
             onBindViewHolder(holder, position)
         } else {
-            if (holder is MediaViewHolder) {
+            if (holder is CaptureViewHolder) {
+                val context = holder.itemView.context
+                holder.update(context)
+            } else if (holder is MediaViewHolder) {
                 holder.item = mData[position]
                 for (payload in payloads) {
                     if (CHANGE_CHECK_STATUS == payload) holder.updateCheck()
@@ -113,7 +117,8 @@ class AlbumMediaAdapter(private val action: ImagePickerAction) : RecyclerView.Ad
         fun updateCheck() {
             val checkedNum: Int = action.selectionCollection().checkedNumOf(item)
             if (checkedNum == Const.UNCHECKED) {
-                check.isSelected = false
+                check.text = null
+                check.setBackgroundResource(R.drawable.ip_icon_photo_unchosen)
                 if (action.selectionCollection().maxSelectableReached()) {
                     check.isEnabled = false
                     image.alpha = 0.3f
@@ -122,10 +127,15 @@ class AlbumMediaAdapter(private val action: ImagePickerAction) : RecyclerView.Ad
                     image.alpha = 1.0f
                 }
             } else {
-                check.text = checkedNum.toString()
-                check.isSelected = true
                 check.isEnabled = true
                 image.alpha = 1.0f
+                if (action.selectionCollection().isSingleSelect()) { // 单选
+                    check.text = null
+                    check.setBackgroundResource(R.drawable.ip_icon_photo_chosen)
+                } else { // 多选
+                    check.text = checkedNum.toString()
+                    check.setBackgroundResource(R.drawable.ip_shape_picker_picture_check)
+                }
             }
         }
 
@@ -163,12 +173,28 @@ class AlbumMediaAdapter(private val action: ImagePickerAction) : RecyclerView.Ad
     }
 
     private inner class CaptureViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        val content: TextView = (itemView as ViewGroup).getChildAt(0) as TextView
+
         init {
             itemView.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
             action.onCaptureImage()
+        }
+
+        fun update(context: Context) {
+            if (action.selectionCollection().maxSelectableReached()) {
+                itemView.isEnabled = false
+                content.text = "无法拍摄"
+                val drawable = ContextCompat.getDrawable(context, R.drawable.ip_icon_photo_cant_capture)
+                content.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            } else {
+                itemView.isEnabled = true
+                content.text = "拍摄"
+                val drawable = ContextCompat.getDrawable(context, R.drawable.ip_icon_photo_capture)
+                content.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null)
+            }
         }
     }
 

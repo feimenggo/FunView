@@ -156,17 +156,26 @@ class SelectedItemCollection(private val mContext: Context) {
         return mAlbumMedia!!.size == currentMaxSelectable()
     }
 
+    fun isSingleSelect(): Boolean {
+        return currentMaxSelectable() == 1
+    }
+
     // depends
     private fun currentMaxSelectable(): Int {
         val spec = SelectionSpec.instance
-        return if (spec!!.maxSelectable > 0) {
-            spec.maxSelectable
-        } else if (collectionType == COLLECTION_IMAGE) {
-            spec.maxImageSelectable
-        } else if (collectionType == COLLECTION_VIDEO) {
-            spec.maxVideoSelectable
-        } else {
-            spec.maxSelectable
+        return when {
+            spec.maxSelectable > 0 -> {
+                spec.maxSelectable
+            }
+            collectionType == COLLECTION_IMAGE -> {
+                spec.maxImageSelectable
+            }
+            collectionType == COLLECTION_VIDEO -> {
+                spec.maxVideoSelectable
+            }
+            else -> {
+                spec.maxSelectable
+            }
         }
     }
 

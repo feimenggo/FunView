@@ -37,11 +37,11 @@
         android:layout_gravity="bottom|right"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/selector_picker_picture_preview_confirm"
+        android:background="@drawable/ip_selector_picker_picture_preview_confirm"
         android:enabled="false"
         android:gravity="center"
         android:text="确定"
-        android:textColor="@drawable/selector_picker_picture_preview_confirm"
+        android:textColor="@drawable/ip_selector_picker_picture_preview_confirm"
         android:textSize="13sp"
         android:textStyle="bold" />
 </FrameLayout>
