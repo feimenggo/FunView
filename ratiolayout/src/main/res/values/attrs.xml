@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="ratioTarget">
+        <enum name="x" value="0" />
+        <enum name="y" value="1" />
+    </attr>
+    <attr name="ratioX" format="integer" />
+    <attr name="ratioY" format="integer" />
+
+    <declare-styleable name="RatioFrameLayout">
+        <attr name="ratioTarget" />
+        <attr name="ratioX" />
+        <attr name="ratioY" />
+    </declare-styleable>
+
+    <declare-styleable name="RatioLinearLayout">
+        <attr name="ratioTarget" />
+        <attr name="ratioX" />
+        <attr name="ratioY" />
+    </declare-styleable>
+
+    <declare-styleable name="RatioImageView">
+        <attr name="ratioTarget" />
+        <attr name="ratioX" />
+        <attr name="ratioY" />
+    </declare-styleable>
+</resources>

@@ -19,4 +19,5 @@
     <item name="imagePicker" type="id" />
     <item name="kaomoji" type="id" />
     <item name="imageViewer" type="id" />
+    <item name="ratio" type="id" />
 </resources>

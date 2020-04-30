@@ -44,6 +44,7 @@ dependencies {
     implementation project(path: ':kaomojiboard')
     implementation project(path: ':KeyboardDetector')
     implementation project(path: ':DrawerSpace')
+    implementation project(path: ':ratiolayout')
 
     implementation 'org.salient.artvideoplayer:artplayer-java:0.6.0'
     implementation 'org.salient.artvideoplayer:artplayer-ui:0.6.0'
