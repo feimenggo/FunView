@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="49dp"
         android:layout_gravity="center_horizontal"
-        android:drawableRight="@drawable/ip_icon_arrow_down"
+        android:drawableRight="@drawable/ip_icon_album_arrow"
         android:drawablePadding="5dp"
         android:gravity="center"
         android:paddingLeft="20dp"
