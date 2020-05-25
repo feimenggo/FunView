@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".ratio.RatioLayoutDemoActivity">
 
-    <com.feimeng.layout.RatioImageView
+    <com.feimeng.layout.ratio.RatioImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@color/colorPrimary"
@@ -16,7 +16,7 @@
         app:ratioX="1"
         app:ratioY="2" />
 
-    <com.feimeng.layout.RatioImageView
+    <com.feimeng.layout.ratio.RatioImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@android:color/holo_blue_bright"

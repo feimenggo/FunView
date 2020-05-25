@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.feimeng.fun.gridlayout.GridLayoutDemoActivity;
 import com.feimeng.fun.imagepicker.ImagePickerDemoActivity;
 import com.feimeng.fun.imageviewer.ImageViewerDemoActivity;
 import com.feimeng.fun.kaomoji.KaomojiDemoActivity;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.imagePicker).setOnClickListener(this);
         findViewById(R.id.imageViewer).setOnClickListener(this);
         findViewById(R.id.ratio).setOnClickListener(this);
+        findViewById(R.id.grid).setOnClickListener(this);
         findViewById(R.id.btn).setOnClickListener(this);
         NetWorkMonitorManager.getInstance().init(getApplication());
         NetWorkMonitorManager.getInstance().register(this);
@@ -47,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.ratio:
                 startActivity(new Intent(this, RatioLayoutDemoActivity.class));
+                break;
+            case R.id.grid:
+                startActivity(new Intent(this, GridLayoutDemoActivity.class));
                 break;
         }
     }

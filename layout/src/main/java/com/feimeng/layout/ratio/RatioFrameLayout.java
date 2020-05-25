@@ -1,4 +1,4 @@
-package com.feimeng.layout;
+package com.feimeng.layout.ratio;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,6 +8,8 @@ import android.widget.FrameLayout;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.feimeng.layout.R;
 
 /**
  * 自定义宽高比例的FrameLayout，例如2:5、4:3等等，默认为1:1。

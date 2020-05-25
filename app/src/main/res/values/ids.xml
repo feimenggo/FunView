@@ -20,4 +20,5 @@
     <item name="kaomoji" type="id" />
     <item name="imageViewer" type="id" />
     <item name="ratio" type="id" />
+    <item name="grid" type="id" />
 </resources>

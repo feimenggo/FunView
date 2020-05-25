@@ -26,13 +26,10 @@ public class NetStateUtils {
         // 获取NetworkInfo对象
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
         // NetworkInfo对象为空 则代表没有网络
-        if (networkInfo == null) {
-            return netType;
-        }
+        if (networkInfo == null) return netType;
         // 否则 NetworkInfo对象不为空 则获取该networkInfo的类型
         int nType = networkInfo.getType();
-        if (nType == ConnectivityManager.TYPE_WIFI) {
-            //WIFI
+        if (nType == ConnectivityManager.TYPE_WIFI) { // WIFI
             netType = 1;
         } else if (nType == ConnectivityManager.TYPE_MOBILE) {
             int nSubType = networkInfo.getSubtype();

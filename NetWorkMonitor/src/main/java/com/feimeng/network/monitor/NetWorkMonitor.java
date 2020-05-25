@@ -8,11 +8,10 @@ import java.lang.annotation.Target;
 /**
  * Author: Feimeng
  * Time:   2020/1/15
- * Description:
+ * Description: 监听的网络状态变化 默认全部监听并提示
  */
 @Retention(RetentionPolicy.RUNTIME) // 运行时注解
 @Target(ElementType.METHOD) // 标记在方法上
 public @interface NetWorkMonitor {
-    // 监听的网络状态变化 默认全部监听并提示
     NetWorkState[] monitorFilter() default {NetWorkState.GPRS, NetWorkState.WIFI, NetWorkState.NONE};
 }

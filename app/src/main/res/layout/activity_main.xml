@@ -40,6 +40,13 @@
         android:layout_below="@id/imagePicker"
         android:text="比例布局" />
 
+    <Button
+        android:id="@id/grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ratio"
+        android:text="网格布局" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

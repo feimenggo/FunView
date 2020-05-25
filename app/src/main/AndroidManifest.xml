@@ -60,5 +60,6 @@
 
         <activity android:name=".loading.LoadingDemoActivity" />
         <activity android:name=".ratio.RatioLayoutDemoActivity" />
+        <activity android:name=".gridlayout.GridLayoutDemoActivity" />
     </application>
 </manifest>

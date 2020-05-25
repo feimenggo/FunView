@@ -41,40 +41,28 @@ public class DisplayActivity extends AppCompatActivity {
             "https://wx4.sinaimg.cn/large/0075aoetgy1fwkmjmcl67j30b3cmchdw.jpg"
     };
 
-    String[] normalImageUlr = new String[]{
+    String[] normalImageUrl = new String[]{
             "http://img1.juimg.com/140908/330608-140ZP1531651.jpg",
-            "https://img.mozhes.com/images/1586455370426.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455367231.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455366872.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455364922.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455366201.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455371304.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455369355.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455376907.jpg?x-oss-process=style/thumbnail"
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304050&di=5df02cff88866929e0cab35d003b5bf0&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fwallpaper%2F1306%2F17%2Fc1%2F22199754_1371460645988.jpg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304050&di=94f005693f13c5182794db83d16e85d8&imgtype=0&src=http%3A%2F%2F01.minipic.eastday.com%2F20160808%2F20160808005842_8583cad74ac6cf9d6305b323ed6386bc_4.jpeg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304049&di=4b23f4053af00b6b22dd717cca92baf6&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fblog%2F201307%2F13%2F20130713175942_8h4Tz.jpeg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304049&di=45b9c06dd982e68a63437b13b024de91&imgtype=0&src=http%3A%2F%2Fgss0.baidu.com%2F-vo3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2Fd4628535e5dde7113dd9a57faeefce1b9d166134.jpg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304049&di=927575e8f146af765d3c19d455325071&imgtype=0&src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201407%2F31%2F20140731115020_wV2xL.jpeg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304047&di=a2f2d4024723294d5a6b35293d25dc05&imgtype=0&src=http%3A%2F%2Fgss0.baidu.com%2F-Po3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2F242dd42a2834349ba8b3fa8ec1ea15ce36d3be00.jpg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304045&di=83b6950bc8b8b8d55c72c238bff3dae8&imgtype=0&src=http%3A%2F%2Fhiphotos.baidu.com%2F784514578845415478%2Fpic%2Fitem%2F43f581dd064f0c2e485403f8.jpg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304045&di=388f86d824091307371c22db20025031&imgtype=0&src=http%3A%2F%2Fgss0.baidu.com%2F-fo3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2F241f95cad1c8a7869f17219c6109c93d70cf5066.jpg"
     };
 
     String[] thumbs = new String[]{
             "https://ww4.sinaimg.cn/bmiddle/61e7945bly1fwnpjo7er0j215o6u77o1.jpg",
-            "https://img.mozhes.com/images/1586455370426.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455367231.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455366872.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455364922.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455366201.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455371304.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455369355.jpg?x-oss-process=style/thumbnail",
-            "https://img.mozhes.com/images/1586455376907.jpg?x-oss-process=style/thumbnail"
-    };
-
-    String[] images = new String[]{
-            "https://ww4.sinaimg.cn/bmiddle/61e7945bly1fwnpjo7er0j215o6u77o1.jpg",
-            "https://img.mozhes.com/images/1586455370426.jpg?Expires=1901815361&OSSAccessKeyId=LTAIn3yAXcNaGyDT&Signature=2IOEjzq1e8iysKiyWU7PYl9%2FqdA%3D&width=1280&height=720",
-            "https://img.mozhes.com/images/1586455367231.jpg?Expires=1901815362&OSSAccessKeyId=LTAIn3yAXcNaGyDT&Signature=1jWlrsQn8Hw7aWTSIYFD7qxEYmY%3D&width=1280&height=720",
-            "https://img.mozhes.com/images/1586455366872.jpg?Expires=1901815363&OSSAccessKeyId=LTAIn3yAXcNaGyDT&Signature=DqGHI4eM7dB0PhVPP%2FvJ6E9jPiM%3D&width=1280&height=720",
-            "https://img.mozhes.com/images/1586455364922.jpg?Expires=1901815364&OSSAccessKeyId=LTAIn3yAXcNaGyDT&Signature=wZ7FxGernex%2B9Zw3qZq6ewrVGJg%3D&width=1280&height=720",
-            "https://img.mozhes.com/images/1586455366201.jpg?Expires=1901815365&OSSAccessKeyId=LTAIn3yAXcNaGyDT&Signature=YoZU0jsCjXdeW3PVRdPvzOufLIU%3D&width=1280&height=720",
-            "https://img.mozhes.com/images/1586455371304.jpg?Expires=1901815366&OSSAccessKeyId=LTAIn3yAXcNaGyDT&Signature=CKhT0PtYd5tWnlSV6MPQEgWFXRg%3D&width=1280&height=720",
-            "https://img.mozhes.com/images/1586455369355.jpg?Expires=1901815367&OSSAccessKeyId=LTAIn3yAXcNaGyDT&Signature=fJwi7bp6ACuuoWim4FvwRYN7%2FHI%3D&width=1280&height=720",
-            "https://img.mozhes.com/images/1586455376907.jpg?Expires=1901815368&OSSAccessKeyId=LTAIn3yAXcNaGyDT&Signature=TlVpi%2FcrXeia%2FPnDTBzD8HZdtlo%3D&width=1280&height=720"
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304050&di=5df02cff88866929e0cab35d003b5bf0&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fwallpaper%2F1306%2F17%2Fc1%2F22199754_1371460645988.jpg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304050&di=94f005693f13c5182794db83d16e85d8&imgtype=0&src=http%3A%2F%2F01.minipic.eastday.com%2F20160808%2F20160808005842_8583cad74ac6cf9d6305b323ed6386bc_4.jpeg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304049&di=4b23f4053af00b6b22dd717cca92baf6&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fblog%2F201307%2F13%2F20130713175942_8h4Tz.jpeg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304049&di=45b9c06dd982e68a63437b13b024de91&imgtype=0&src=http%3A%2F%2Fgss0.baidu.com%2F-vo3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2Fd4628535e5dde7113dd9a57faeefce1b9d166134.jpg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304049&di=927575e8f146af765d3c19d455325071&imgtype=0&src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201407%2F31%2F20140731115020_wV2xL.jpeg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304047&di=a2f2d4024723294d5a6b35293d25dc05&imgtype=0&src=http%3A%2F%2Fgss0.baidu.com%2F-Po3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2F242dd42a2834349ba8b3fa8ec1ea15ce36d3be00.jpg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304045&di=83b6950bc8b8b8d55c72c238bff3dae8&imgtype=0&src=http%3A%2F%2Fhiphotos.baidu.com%2F784514578845415478%2Fpic%2Fitem%2F43f581dd064f0c2e485403f8.jpg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304045&di=388f86d824091307371c22db20025031&imgtype=0&src=http%3A%2F%2Fgss0.baidu.com%2F-fo3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2F241f95cad1c8a7869f17219c6109c93d70cf5066.jpg"
     };
 
     Context context;
@@ -127,7 +115,7 @@ public class DisplayActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final MyViewHolder holder, final int position) {
-            holder.srcImageView.displayImage(normalImageUlr[position]);
+            holder.srcImageView.displayImage(normalImageUrl[position]);
             holder.srcImageView.setShowGifFlagEnabled(R.drawable.ic_gif);
             holder.srcImageView.setOnClickListener(srcView -> {
 
@@ -144,7 +132,7 @@ public class DisplayActivity extends AppCompatActivity {
                 if (activityPosition == 3) {
                     //加载视频
                     ImageViewer imageViewer = new ImageViewer(context)
-                            .urls(normalImageUlr[position])
+                            .urls(normalImageUrl[position])
                             .position(holder.getAdapterPosition())
                             .views(holder.srcImageView)
                             .type(ViewerConfig.VIDEO)
@@ -152,7 +140,7 @@ public class DisplayActivity extends AppCompatActivity {
                             //提供视频View
                             .onProvideVideoView(() -> new VideoView(context))
                             //显示视频加载之前的缩略图
-                            .loadPhotoBeforeShowBigImage((sketchImageView, position13) -> sketchImageView.displayImage(normalImageUlr[position]))
+                            .loadPhotoBeforeShowBigImage((sketchImageView, position13) -> sketchImageView.displayImage(normalImageUrl[position]))
                             //动画到最大化时的接口
                             .onVideoLoadEnd((dragDiootoView, sketchImageView, progressView) -> {
                                 VideoView videoView = (VideoView) dragDiootoView.getContentView();
@@ -174,22 +162,22 @@ public class DisplayActivity extends AppCompatActivity {
                 } else if (activityPosition == 1) {
                     //加载单张图片
                     ImageViewer imageViewer = new ImageViewer(context)
-                            .urls(normalImageUlr[position])
+                            .urls(normalImageUrl[position])
                             .type(ViewerConfig.PHOTO)
                             .position(0)
                             .views(views[holder.getAdapterPosition()])
                             .loadPhotoBeforeShowBigImage((sketchImageView, position1) -> {
-                                sketchImageView.displayImage(normalImageUlr[position]);
+                                sketchImageView.displayImage(normalImageUrl[position]);
                             })
                             .start();
                 } else {
                     new ImageViewer(context)
-                            .urls(activityPosition == 2 ? longImageUrl : normalImageUlr)
+                            .urls(activityPosition == 2 ? longImageUrl : normalImageUrl)
                             .type(ViewerConfig.PHOTO)
                             .position(holder.getAdapterPosition(), 1)
                             .views(mRecyclerView, R.id.srcImageView)
                             .loadPhotoBeforeShowBigImage((sketchImageView, poi) -> {
-                                sketchImageView.displayImage(normalImageUlr[poi]);
+                                sketchImageView.displayImage(normalImageUrl[poi]);
                                 sketchImageView.setOnLongClickListener(v -> {
                                     Toast.makeText(DisplayActivity.this, "Long click", Toast.LENGTH_SHORT).show();
                                     return false;
@@ -202,7 +190,7 @@ public class DisplayActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return normalImageUlr.length;
+            return normalImageUrl.length;
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {

@@ -1,0 +1,45 @@
+<resources>
+    <declare-styleable name="GridLayout">
+        <!--一列有多少个Item-->
+        <attr name="gridSpan" format="integer" />
+        <!--水平间距-->
+        <attr name="gridHorizontalSpace" format="dimension" />
+        <!--垂直间距-->
+        <attr name="gridVerticalSpace" format="dimension" />
+        <!--条目的宽高是否一样-->
+        <attr name="gridIsSquare" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="StackLineLayout">
+        <!--两个View之间的间距 ：值越小就越近，越大就越远-->
+        <attr name="lineViewMarginRate" format="float" />
+        <!--View的层次关系，true:前面的在上，false:后面的在上-->
+        <attr name="lineIsReverse" format="boolean" />
+    </declare-styleable>
+
+    <attr name="ratioTarget">
+        <enum name="x" value="0" />
+        <enum name="y" value="1" />
+    </attr>
+
+    <attr name="ratioX" format="integer" />
+    <attr name="ratioY" format="integer" />
+
+    <declare-styleable name="RatioFrameLayout">
+        <attr name="ratioTarget" />
+        <attr name="ratioX" />
+        <attr name="ratioY" />
+    </declare-styleable>
+
+    <declare-styleable name="RatioLinearLayout">
+        <attr name="ratioTarget" />
+        <attr name="ratioX" />
+        <attr name="ratioY" />
+    </declare-styleable>
+
+    <declare-styleable name="RatioImageView">
+        <attr name="ratioTarget" />
+        <attr name="ratioX" />
+        <attr name="ratioY" />
+    </declare-styleable>
+</resources>

@@ -1,4 +1,4 @@
-package com.feimeng.layout;
+package com.feimeng.layout.ratio;
 
 /**
  * 自定义宽高比例
