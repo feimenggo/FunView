@@ -11,15 +11,17 @@
         android:layout_width="49dp"
         android:layout_height="49dp"
         android:gravity="center"
-        android:src="#abc2e4" />
+        android:scaleType="center"
+        android:src="@drawable/ip_icon_back"
+        android:tint="@color/white" />
 
     <ImageView
         android:id="@id/check"
         android:layout_width="49dp"
         android:layout_height="49dp"
         android:layout_gravity="right"
-        android:gravity="center"
-        android:src="#abc2e4" />
+        android:scaleType="center"
+        tools:src="@drawable/ip_icon_photo_big_chosen" />
 
     <com.feimeng.imagepicker.ui.widget.HackyViewPager
         android:id="@id/vp"
