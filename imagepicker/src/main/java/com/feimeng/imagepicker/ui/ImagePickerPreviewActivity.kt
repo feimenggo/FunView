@@ -22,6 +22,7 @@ import com.feimeng.imagepicker.adapter.PreviewPagerAdapter
 import com.feimeng.imagepicker.base.BaseImagePickerActivity
 import com.feimeng.imagepicker.entity.AlbumMedia
 import com.feimeng.imagepicker.entity.SelectionSpec
+import com.gyf.immersionbar.ImmersionBar
 
 /**
  * Author: Feimeng
@@ -50,6 +51,13 @@ class ImagePickerPreviewActivity : BaseImagePickerActivity(), ViewPager.OnPageCh
         fun start(context: Activity, requestCode: Int, albumMedias: ArrayList<AlbumMedia>) {
             context.startActivityForResult(Intent(context, ImagePickerPreviewActivity::class.java).putParcelableArrayListExtra(ImagePicker.PICKED_MEDIA, albumMedias), requestCode)
         }
+    }
+
+    override fun initStatusBar() {
+        val bar = ImmersionBar.with(this)
+        bar.statusBarColorInt(Color.TRANSPARENT)
+        bar.statusBarDarkFont(false)
+        bar.init()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

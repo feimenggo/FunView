@@ -16,7 +16,7 @@ abstract class BaseImagePickerActivity : AppCompatActivity() {
         initStatusBar()
     }
 
-    protected fun initStatusBar() {
+    protected open fun initStatusBar() {
         val bar = ImmersionBar.with(this)
         bar.statusBarColorInt(Color.TRANSPARENT)
         bar.statusBarDarkFont(true, 0.6f)

@@ -75,7 +75,7 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
         initData(savedInstanceState)
     }
 
-    private fun initView() {
+    protected fun initView() {
         findViewById<View>(R.id.back).setOnClickListener(this)
         mPreviewView = findViewById(R.id.preview)
         mPreviewView.setOnClickListener(this)
@@ -106,7 +106,7 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
         mAlbumMediaRV.adapter = mAlbumMediaAdapter
     }
 
-    private fun initData(savedInstanceState: Bundle?) {
+    protected fun initData(savedInstanceState: Bundle?) {
         mSelectedCollection = SelectedItemCollection(this)
         mSelectedCollection.onCreate(savedInstanceState)
         mAlbumCollection.onCreate(this, this)
@@ -169,7 +169,7 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
         startActivityForResult(pictureChooseIntent, REQ_CAPTURE_IMAGE)
     }
 
-    private fun createImageUri(): Uri? {
+    protected fun createImageUri(): Uri? {
         val contentResolver = contentResolver
         val cv = ContentValues()
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
@@ -177,7 +177,7 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
         return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cv)
     }
 
-    private fun onAlbumSelected(album: Album) {
+    protected fun onAlbumSelected(album: Album) {
         mAlbumMediaCollection.load(album, SelectionSpec.instance.capture)
         mAlbumTitleView.text = album.getDisplayName(this)
         if (album.isAll && album.isEmpty) {
@@ -223,23 +223,23 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
         }
     }
 
-    private fun startPreview() {
+    protected fun startPreview() {
         ImagePickerPreviewActivity.start(this, REQ_PREVIEW_IMAGE, mSelectedCollection.asList())
     }
 
-    private fun showAlbumList() {
+    protected fun showAlbumList() {
         mAlbumTitleView.isSelected = true
         mAlbumRV.visibility = View.VISIBLE
         mShadow.visibility = View.VISIBLE
     }
 
-    private fun hideAlbumList() {
+    protected fun hideAlbumList() {
         mAlbumTitleView.isSelected = false
         mAlbumRV.visibility = View.GONE
         mShadow.visibility = View.GONE
     }
 
-    private fun pickerResult(images: ArrayList<Uri>) {
+    protected fun pickerResult(images: ArrayList<Uri>) {
         setResult(Activity.RESULT_OK, intent.putParcelableArrayListExtra(PICKED_MEDIA, images))
         onBackPressed()
     }
