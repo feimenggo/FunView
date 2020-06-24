@@ -282,9 +282,10 @@ public class Loading {
 
                         @Override
                         public void endTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
-                            container.setLayoutTransition(null);
+                            mWrapper.setLayoutTransition(null);
                         }
                     });
+                    transition.setAnimateParentHierarchy(false);
                     mWrapper.setLayoutTransition(transition);
                 }
                 mWrapper.removeView(mCurStatusView);

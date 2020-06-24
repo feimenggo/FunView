@@ -29,7 +29,6 @@ import com.feimeng.imagepicker.ui.widget.MediaGridInset
 import com.feimeng.imagepicker.util.UIUtils
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Author: Feimeng
@@ -202,7 +201,9 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
                     pickerResult(mSelectedCollection.asListOfUri(albumMedia))
                 }
                 REQ_CAPTURE_IMAGE -> {
-                    if (mCameraPictureUrl != null) pickerResult(ArrayList<Uri>(1).apply { add(mCameraPictureUrl!!) })
+                    if (mCameraPictureUrl != null) {
+//                        pickerResult(ArrayList<Uri>(1).apply { add(mCameraPictureUrl!!) })
+                    }
                 }
             }
         }
