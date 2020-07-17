@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    android:orientation="vertical"
+    tools:context=".imagecrop.ImageCropDemoActivity">
+
+    <com.feimeng.imagecrop.view.ImageCropView
+        android:id="@id/imageCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:gridInnerColor="#66ffffff"
+        app:gridInnerStroke="1dp"
+        app:gridLeftRightMargin="20dp"
+        app:gridOuterColor="#ffff"
+        app:gridOuterStroke="1dp"
+        app:outlineStyle="circle"
+        app:outsideLayerColor="#4C000000"
+        app:setInnerGridMode="on"
+        app:setOuterGridMode="on" />
+</LinearLayout>

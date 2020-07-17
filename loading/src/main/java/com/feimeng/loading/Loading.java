@@ -158,6 +158,10 @@ public class Loading {
             return this;
         }
 
+        public int getCurState() {
+            return mCurState;
+        }
+
         /**
          * set retry task when user click the retry button in load failed page
          *

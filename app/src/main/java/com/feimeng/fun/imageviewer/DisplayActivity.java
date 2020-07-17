@@ -43,7 +43,7 @@ public class DisplayActivity extends AppCompatActivity {
 
     String[] normalImageUrl = new String[]{
             "http://img1.juimg.com/140908/330608-140ZP1531651.jpg",
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304050&di=5df02cff88866929e0cab35d003b5bf0&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fwallpaper%2F1306%2F17%2Fc1%2F22199754_1371460645988.jpg",
+            "https://pome.obs.cn-east-3.myhuaweicloud.com/dynamicImage/tiny-41-2020-06-30-23-09-01.jpg?w=198&h=192",
             "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304050&di=94f005693f13c5182794db83d16e85d8&imgtype=0&src=http%3A%2F%2F01.minipic.eastday.com%2F20160808%2F20160808005842_8583cad74ac6cf9d6305b323ed6386bc_4.jpeg",
             "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304049&di=4b23f4053af00b6b22dd717cca92baf6&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fblog%2F201307%2F13%2F20130713175942_8h4Tz.jpeg",
             "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589782304049&di=45b9c06dd982e68a63437b13b024de91&imgtype=0&src=http%3A%2F%2Fgss0.baidu.com%2F-vo3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2Fd4628535e5dde7113dd9a57faeefce1b9d166134.jpg",

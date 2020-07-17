@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.feimeng.fun.gridlayout.GridLayoutDemoActivity;
+import com.feimeng.fun.imagecrop.ImageCropDemoActivity;
 import com.feimeng.fun.imagepicker.ImagePickerDemoActivity;
 import com.feimeng.fun.imageviewer.ImageViewerDemoActivity;
 import com.feimeng.fun.kaomoji.KaomojiDemoActivity;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.keyboard).setOnClickListener(this);
         findViewById(R.id.kaomoji).setOnClickListener(this);
         findViewById(R.id.imagePicker).setOnClickListener(this);
+        findViewById(R.id.imageCrop).setOnClickListener(this);
         findViewById(R.id.imageViewer).setOnClickListener(this);
         findViewById(R.id.ratio).setOnClickListener(this);
         findViewById(R.id.grid).setOnClickListener(this);
@@ -43,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.imagePicker:
                 startActivity(new Intent(this, ImagePickerDemoActivity.class));
+                break;
+            case R.id.imageCrop:
+                startActivity(new Intent(this, ImageCropDemoActivity.class));
                 break;
             case R.id.imageViewer:
                 startActivity(new Intent(this, ImageViewerDemoActivity.class));

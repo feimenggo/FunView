@@ -27,6 +27,13 @@
         android:text="图片选择" />
 
     <Button
+        android:id="@id/imageCrop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/kaomoji"
+        android:text="图片裁剪" />
+
+    <Button
         android:id="@id/imageViewer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +44,7 @@
         android:id="@id/ratio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imagePicker"
+        android:layout_below="@id/imageViewer"
         android:text="比例布局" />
 
     <Button

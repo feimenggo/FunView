@@ -21,4 +21,5 @@
     <item name="imageViewer" type="id" />
     <item name="ratio" type="id" />
     <item name="grid" type="id" />
+    <item name="imageCrop" type="id" />
 </resources>
