@@ -30,14 +30,14 @@
         android:id="@id/imageCrop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/kaomoji"
+        android:layout_below="@id/imagePicker"
         android:text="图片裁剪" />
 
     <Button
         android:id="@id/imageViewer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imagePicker"
+        android:layout_below="@id/imageCrop"
         android:text="图片浏览" />
 
     <Button

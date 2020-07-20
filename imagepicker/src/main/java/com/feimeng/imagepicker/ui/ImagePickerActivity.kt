@@ -36,8 +36,8 @@ import java.util.*
  * Description: 图片选择
  */
 class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCallbacks, View.OnClickListener, AlbumMediaCollection.AlbumMediaCallbacks, ImagePickerAction {
-    private val mAlbumCollection = AlbumCollection()
-    private val mAlbumMediaCollection = AlbumMediaCollection()
+    private lateinit var mAlbumCollection: AlbumCollection
+    private lateinit var mAlbumMediaCollection: AlbumMediaCollection
     private lateinit var mSelectedCollection: SelectedItemCollection
 
     private lateinit var mAlbumTitleView: TextView
@@ -66,12 +66,17 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        overridePendingTransition(R.anim.in_from_bottom, R.anim.none)
-        super.onCreate(savedInstanceState)
-        window.decorView.setBackgroundColor(Color.WHITE)
-        setContentView(R.layout.ip_activity_image_picker)
-        initView()
-        initData(savedInstanceState)
+        if (SelectionSpec.hasInstance()) {
+            overridePendingTransition(R.anim.in_from_bottom, R.anim.none)
+            super.onCreate(savedInstanceState)
+            window.decorView.setBackgroundColor(Color.WHITE)
+            setContentView(R.layout.ip_activity_image_picker)
+            initView()
+            initData(savedInstanceState)
+        } else {
+            super.onCreate(savedInstanceState)
+            finish()
+        }
     }
 
     protected fun initView() {
@@ -108,7 +113,9 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
     protected fun initData(savedInstanceState: Bundle?) {
         mSelectedCollection = SelectedItemCollection(this)
         mSelectedCollection.onCreate(savedInstanceState)
+        mAlbumCollection = AlbumCollection()
         mAlbumCollection.onCreate(this, this)
+        mAlbumMediaCollection = AlbumMediaCollection()
         mAlbumMediaCollection.onCreate(this, this)
         mAlbumCollection.onRestoreInstanceState(savedInstanceState)
         mAlbumCollection.loadAlbums()
@@ -127,8 +134,8 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
 
     override fun onDestroy() {
         super.onDestroy()
-        mAlbumCollection.onDestroy()
-        mAlbumMediaCollection.onDestroy()
+        if (::mAlbumCollection.isInitialized) mAlbumCollection.onDestroy()
+        if (::mAlbumMediaCollection.isInitialized) mAlbumMediaCollection.onDestroy()
     }
 
     override fun onAlbumLoad(albums: List<Album>) {

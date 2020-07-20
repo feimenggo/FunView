@@ -126,6 +126,10 @@ class SelectionSpec private constructor() {
                 InstanceHolder.INSTANCE = selectionSpec
             }
 
+        fun hasInstance(): Boolean {
+            return InstanceHolder.INSTANCE != null
+        }
+
         /**
          * You should init the [SelectionSpec] by this method, it will instance default
          * [ImageEngine] for loading image.
