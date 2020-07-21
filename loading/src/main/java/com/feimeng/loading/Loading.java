@@ -21,7 +21,7 @@ public class Loading {
     public static final int STATUS_LOADING = 1;
     public static final int STATUS_LOAD_FAILED = 3;
     public static final int STATUS_EMPTY_DATA = 4;
-    private static final int STATUS_LOAD_SUCCESS = 2;
+    public static final int STATUS_LOAD_SUCCESS = 2;
 
     private static volatile Loading mDefault;
     private Adapter mAdapter;
