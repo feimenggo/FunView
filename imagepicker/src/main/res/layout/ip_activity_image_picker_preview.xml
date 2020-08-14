@@ -53,16 +53,31 @@
 
     <TextView
         android:id="@id/select"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="49dp"
         android:layout_gravity="bottom"
         android:gravity="center"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         android:text="已选9张"
         android:textColor="#9C9C9C"
         android:textSize="13sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@id/original"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="80dp"
+        android:drawablePadding="6dp"
+        android:gravity="center"
+        android:paddingLeft="8dp"
+        android:paddingRight="16dp"
+        android:text="原图"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:drawableLeft="@drawable/ip_icon_original_pic_unchoose" />
 
     <TextView
         android:id="@id/confirm"

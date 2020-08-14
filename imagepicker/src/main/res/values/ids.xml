@@ -13,4 +13,5 @@
     <item name="scroll" type="id" />
     <item name="videoDuration" type="id" />
     <item name="shadow" type="id" />
+    <item name="original" type="id" />
 </resources>

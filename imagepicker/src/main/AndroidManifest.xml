@@ -7,5 +7,15 @@
     <application>
         <activity android:name="com.feimeng.imagepicker.ui.ImagePickerActivity" />
         <activity android:name="com.feimeng.imagepicker.ui.ImagePickerPreviewActivity" />
+
+        <provider
+            android:name=".base.ImagePickerProvider"
+            android:authorities="${applicationId}.imagepicker"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/ip_provider_paths" />
+        </provider>
     </application>
 </manifest>

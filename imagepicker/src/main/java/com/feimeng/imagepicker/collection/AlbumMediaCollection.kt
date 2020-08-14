@@ -34,6 +34,7 @@ class AlbumMediaCollection : LoaderManager.LoaderCallbacks<Cursor> {
     private var mLoaderManager: LoaderManager? = null
     private var mCallbacks: AlbumMediaCallbacks? = null
 
+    private var mArgs: Bundle? = null
     private var mLoader: Loader<Cursor>? = null
 
     fun onCreate(context: FragmentActivity, callbacks: AlbumMediaCallbacks) {
@@ -52,8 +53,18 @@ class AlbumMediaCollection : LoaderManager.LoaderCallbacks<Cursor> {
         val args = Bundle()
         args.putParcelable(ARGS_ALBUM, target)
         args.putBoolean(ARGS_ENABLE_CAPTURE, enableCapture)
+        createLoader(args)
+        mArgs = args
+    }
+
+    private fun createLoader(args: Bundle) {
         mLoader = if (mLoader == null) mLoaderManager!!.initLoader(LOADER_ID, args, this) else
             mLoaderManager!!.restartLoader(LOADER_ID, args, this)
+    }
+
+    @JvmOverloads
+    fun reload() {
+        mArgs?.let { createLoader(it) }
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {

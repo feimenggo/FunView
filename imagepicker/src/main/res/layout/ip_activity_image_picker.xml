@@ -43,7 +43,25 @@
         android:gravity="center"
         android:text="预览"
         android:textColor="@drawable/ip_selector_picker_picture_preview"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@id/original"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="60dp"
+        android:drawablePadding="6dp"
+        android:gravity="center"
+        android:paddingLeft="8dp"
+        android:paddingRight="16dp"
+        android:text="原图"
+        android:textColor="#FF2A2A2A"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:drawableLeft="@drawable/ip_icon_original_pic_unchoose" />
 
     <TextView
         android:id="@id/confirm"

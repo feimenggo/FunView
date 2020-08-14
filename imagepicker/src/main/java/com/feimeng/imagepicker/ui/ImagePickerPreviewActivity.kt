@@ -38,6 +38,7 @@ class ImagePickerPreviewActivity : BaseImagePickerActivity(), ViewPager.OnPageCh
 
     private lateinit var mCheckView: ImageView
     private lateinit var mSelectView: TextView // 选择数量大于1有效
+    private lateinit var mOriginalView: TextView // 原图开关
     private lateinit var mConfirmView: TextView
 
     private lateinit var mShowGroupScroll: HorizontalScrollView
@@ -75,6 +76,8 @@ class ImagePickerPreviewActivity : BaseImagePickerActivity(), ViewPager.OnPageCh
         findViewById<View>(R.id.back).setOnClickListener(this)
         mCheckView = findViewById(R.id.check)
         mCheckView.setOnClickListener(this)
+        mOriginalView = findViewById(R.id.original)
+        mOriginalView.setOnClickListener(this)
         mConfirmView = findViewById(R.id.confirm)
         mConfirmView.setOnClickListener(this)
 
@@ -107,6 +110,10 @@ class ImagePickerPreviewActivity : BaseImagePickerActivity(), ViewPager.OnPageCh
         } else {
             mCheckView.isSelected = mCurrentSelects.contains(mSelects[mVP.currentItem])
             updateCheck()
+        }
+        if (SelectionSpec.instance.original != -1) {
+            mOriginalView.visibility = View.VISIBLE
+            updateOriginal()
         }
         updateConfirm()
     }
@@ -163,9 +170,15 @@ class ImagePickerPreviewActivity : BaseImagePickerActivity(), ViewPager.OnPageCh
         when (v.id) {
             R.id.back -> onBackPressed()
             R.id.check -> toggleCheck()
+            R.id.original -> toggleOriginal()
             R.id.confirm -> previewResult()
             else -> mVP.setCurrentItem(v.tag as Int, false)
         }
+    }
+
+    private fun toggleOriginal() {
+        SelectionSpec.instance.original = if (SelectionSpec.instance.original == 1) 0 else 1
+        updateOriginal()
     }
 
     private fun toggleCheck() {
@@ -182,6 +195,11 @@ class ImagePickerPreviewActivity : BaseImagePickerActivity(), ViewPager.OnPageCh
 
     private fun updateCheck() {
         mCheckView.setImageResource(if (mCheckView.isSelected) R.drawable.ip_icon_photo_big_chosen else R.drawable.ip_icon_photo_big_unchosen)
+    }
+
+    private fun updateOriginal() {
+        if (SelectionSpec.instance.original == -1) return
+        mOriginalView.setCompoundDrawablesWithIntrinsicBounds(if (SelectionSpec.instance.original == 1) R.drawable.ip_icon_original_pic_chosen else R.drawable.ip_icon_original_pic_unchoose_white, 0, 0, 0)
     }
 
     @SuppressLint("SetTextI18n")

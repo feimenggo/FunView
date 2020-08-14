@@ -33,12 +33,14 @@ class SelectionSpec private constructor() {
     @StyleRes
     var themeId: Int = 0
     var orientation: Int = 0
+    var original: Int = -1
     var countable: Boolean = false
     var maxSelectable: Int = 0
     var maxImageSelectable: Int = 0
     var maxVideoSelectable: Int = 0
     var filters: ArrayList<Filter>? = null
     var capture: Boolean = false
+    var captureDirectory: String? = null
     var spanCount: Int = 0
     var gridExpectedSize: Int = 0
     var thumbnailScale: Float = 0.toFloat()

@@ -3,18 +3,23 @@ package com.feimeng.imagepicker.ui
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.feimeng.imagepicker.ImagePicker.Companion.PICKED_MEDIA
+import com.feimeng.imagepicker.ImagePicker.Companion.SELECT_ORIGINAL
 import com.feimeng.imagepicker.R
 import com.feimeng.imagepicker.adapter.AlbumAdapter
 import com.feimeng.imagepicker.adapter.AlbumMediaAdapter
@@ -27,8 +32,9 @@ import com.feimeng.imagepicker.entity.AlbumMedia
 import com.feimeng.imagepicker.entity.SelectionSpec
 import com.feimeng.imagepicker.ui.widget.MediaGridInset
 import com.feimeng.imagepicker.util.UIUtils
-import java.text.SimpleDateFormat
+import java.io.File
 import java.util.*
+
 
 /**
  * Author: Feimeng
@@ -47,10 +53,15 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
     private var mAlbumAdapter: AlbumAdapter = AlbumAdapter(this)
     private var mAlbumMediaAdapter: AlbumMediaAdapter = AlbumMediaAdapter(this)
 
-    private lateinit var mPreviewView: TextView
-    private lateinit var mConfirmView: TextView
+    private lateinit var mPreviewView: TextView // 预览按钮
+    private lateinit var mOriginalView: TextView // 原图开关
+    private lateinit var mConfirmView: TextView // 确定按钮
 
-    private var mCameraPictureUrl: Uri? = null
+    /**
+     * 拍照结果
+     */
+    private var mImageCaptureUri: Uri? = null
+    private var mImageCaptureFile: File? = null
 
     companion object {
         private const val REQ_PREVIEW_IMAGE = 100
@@ -83,6 +94,8 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
         findViewById<View>(R.id.back).setOnClickListener(this)
         mPreviewView = findViewById(R.id.preview)
         mPreviewView.setOnClickListener(this)
+        mOriginalView = findViewById(R.id.original)
+        mOriginalView.setOnClickListener(this)
         mConfirmView = findViewById(R.id.confirm)
         mConfirmView.setOnClickListener(this)
         // 相册列表
@@ -108,6 +121,10 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
         val spacing = resources.getDimensionPixelSize(R.dimen.media_grid_spacing)
         mAlbumMediaRV.addItemDecoration(MediaGridInset(spanCount, spacing, false))
         mAlbumMediaRV.adapter = mAlbumMediaAdapter
+        if (SelectionSpec.instance.original != -1) {
+            mOriginalView.visibility = View.VISIBLE
+            updateOriginal()
+        }
     }
 
     protected fun initData(savedInstanceState: Bundle?) {
@@ -169,18 +186,37 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
     }
 
     override fun onCaptureImage() {
-        mCameraPictureUrl = createImageUri()
-        val pictureChooseIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        pictureChooseIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCameraPictureUrl)
-        startActivityForResult(pictureChooseIntent, REQ_CAPTURE_IMAGE)
+        createImageUri()
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri)
+        startActivityForResult(intent, REQ_CAPTURE_IMAGE)
     }
 
-    protected fun createImageUri(): Uri? {
-        val contentResolver = contentResolver
-        val cv = ContentValues()
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        cv.put(MediaStore.Images.Media.TITLE, timeStamp)
-        return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cv)
+    protected fun createImageUri() {
+        val imageName = "IMG_" + System.currentTimeMillis() + ".jpg"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // 29以上使用Media保存图片
+            val cv = ContentValues()
+            cv.put(MediaStore.Images.Media.TITLE, imageName)
+            cv.put(MediaStore.Images.Media.DISPLAY_NAME, imageName)
+            cv.put(MediaStore.Images.Media.DESCRIPTION, imageName)
+            cv.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            if (SelectionSpec.instance.captureDirectory == null) {
+                cv.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+            } else {
+                cv.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/" + SelectionSpec.instance.captureDirectory)
+            }
+            mImageCaptureUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cv)
+        } else { // 29以下手动保存图片到相册
+            var directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            SelectionSpec.instance.captureDirectory?.let { directory = File(directory, it) }
+            if (!directory.exists()) directory.mkdirs()
+            mImageCaptureFile = File(directory, imageName)
+            mImageCaptureUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                FileProvider.getUriForFile(this, "$packageName.imagepicker", mImageCaptureFile!!)
+            } else {
+                Uri.fromFile(mImageCaptureFile)
+            }
+        }
     }
 
     protected fun onAlbumSelected(album: Album) {
@@ -204,12 +240,15 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQ_PREVIEW_IMAGE -> {
-                    val albumMedia: ArrayList<AlbumMedia> = data!!.getParcelableArrayListExtra(PICKED_MEDIA)
+                    val albumMedia: ArrayList<AlbumMedia> = data!!.getParcelableArrayListExtra(PICKED_MEDIA)!!
                     pickerResult(mSelectedCollection.asListOfUri(albumMedia))
                 }
                 REQ_CAPTURE_IMAGE -> {
-                    if (mCameraPictureUrl != null) {
-//                        pickerResult(ArrayList<Uri>(1).apply { add(mCameraPictureUrl!!) })
+                    if (mImageCaptureUri != null) { // 拍照成功
+                        mAlbumTitleView.post {
+                            mImageCaptureFile?.let { saveImageIntoGallery(mImageCaptureFile!!) }
+                            mAlbumMediaCollection.reload() // 刷新相册
+                        }
                     }
                 }
             }
@@ -227,6 +266,7 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
                 }
             }
             R.id.preview -> startPreview()
+            R.id.original -> toggleOriginal()
             R.id.confirm -> pickerResult(mSelectedCollection.asListOfUri())
         }
     }
@@ -248,7 +288,37 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
     }
 
     protected fun pickerResult(images: ArrayList<Uri>) {
-        setResult(Activity.RESULT_OK, intent.putParcelableArrayListExtra(PICKED_MEDIA, images))
+        setResult(Activity.RESULT_OK, intent.putParcelableArrayListExtra(PICKED_MEDIA, images).putExtra(SELECT_ORIGINAL, SelectionSpec.instance.original))
         onBackPressed()
+    }
+
+    private fun toggleOriginal() {
+        SelectionSpec.instance.original = if (SelectionSpec.instance.original == 1) 0 else 1
+        updateOriginal()
+    }
+
+    private fun updateOriginal() {
+        if (SelectionSpec.instance.original == -1) return
+        mOriginalView.setCompoundDrawablesWithIntrinsicBounds(if (SelectionSpec.instance.original == 1) R.drawable.ip_icon_original_pic_chosen else R.drawable.ip_icon_original_pic_unchoose, 0, 0, 0)
+    }
+
+    /**
+     * 保存图片到相册
+     */
+    private fun saveImageIntoGallery(imageFile: File) {
+        val name = imageFile.name
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, name)
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, name)
+        values.put(MediaStore.Images.Media.DESCRIPTION, name)
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+
+        val option = BitmapFactory.Options()
+        option.inJustDecodeBounds = true
+        BitmapFactory.decodeFile(imageFile.absolutePath, option)
+        values.put(MediaStore.Images.ImageColumns.WIDTH, option.outWidth)
+        values.put(MediaStore.Images.ImageColumns.HEIGHT, option.outHeight)
+        values.put(MediaStore.Images.ImageColumns.DATA, imageFile.absolutePath)
+        contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
     }
 }

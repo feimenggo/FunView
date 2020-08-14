@@ -13,6 +13,7 @@ import com.feimeng.imagepicker.ui.ImagePickerActivity
 class ImagePicker private constructor() {
     companion object {
         const val PICKED_MEDIA = "PICKED_MEDIA"
+        const val SELECT_ORIGINAL = "SELECT_ORIGINAL"
 
         fun start(context: Activity, requestCode: Int, selectionSpec: SelectionSpec) {
             SelectionSpec.instance = selectionSpec

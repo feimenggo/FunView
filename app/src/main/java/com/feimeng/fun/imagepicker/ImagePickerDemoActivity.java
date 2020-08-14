@@ -65,6 +65,7 @@ public class ImagePickerDemoActivity extends AppCompatActivity implements View.O
     private void pickerSingle() {
         SelectionSpec selectionSpec = SelectionSpec.Companion.getNewCleanInstance(new GlideEngine());
         selectionSpec.setCapture(true);
+        selectionSpec.setCaptureDirectory("funny");
         selectionSpec.setMimeTypeSet(MimeType.INSTANCE.ofImage());
         selectionSpec.setMediaTypeExclusive(false);
         selectionSpec.setMaxSelectable(1);
@@ -84,8 +85,9 @@ public class ImagePickerDemoActivity extends AppCompatActivity implements View.O
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
+            boolean original = data.getBooleanExtra(ImagePicker.SELECT_ORIGINAL, false);
             ArrayList<Uri> list = data.getParcelableArrayListExtra(ImagePicker.PICKED_MEDIA);
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder("原图:" + original + "\n");
             for (Uri uri : list) {
                 sb.append(uri.toString()).append("\n");
             }
