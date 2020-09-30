@@ -23,4 +23,12 @@
         app:ratioTarget="y"
         app:ratioX="1"
         app:ratioY="2" />
+
+    <com.feimeng.layout.rounded.RoundImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:src="@android:color/holo_blue_bright"
+        app:cornerMode="top|all"
+        app:cornerRadius="20dp" />
 </LinearLayout>

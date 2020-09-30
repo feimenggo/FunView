@@ -42,4 +42,23 @@
         <attr name="ratioX" />
         <attr name="ratioY" />
     </declare-styleable>
+
+    <attr name="cornerMode">
+        <flag name="topLeft" value="8" />
+        <flag name="topRight" value="4" />
+        <flag name="bottomLeft" value="2" />
+        <flag name="bottomRight" value="1" />
+        <flag name="top" value="12" />
+        <flag name="bottom" value="3" />
+        <flag name="all" value="15" />
+    </attr>
+    <attr name="cornerRadius" format="dimension" />
+
+    <declare-styleable name="RoundImageView">
+        <attr name="reverseMask" format="boolean" />
+        <attr name="cornerRadius" />
+        <attr name="cornerMode" />
+    </declare-styleable>
+
+    <item name="tag_saved_child_recycler_view" type="id" />
 </resources>

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 
 /**
  * Author: Feimeng
@@ -33,7 +32,7 @@ open class KeyboardLayoutHelper : OnKeyboardChangeListener {
     private var mPanelDistance: Int = 0
     private var mCallback: OnKeyboardCallback? = null
 
-    fun addInstantView(view: View, marginBottom: Int, marginBottomVisible: Int): KeyboardLayoutHelper {
+    fun addInstantView(view: View, marginBottom: Int = 0, marginBottomVisible: Int = 0): KeyboardLayoutHelper {
         if (mInstantViews == null) mInstantViews = ArrayList(1)
         view.setTag(R.id.animMarginBottom, marginBottom)
         view.setTag(R.id.animMarginBottomVisible, marginBottomVisible)
@@ -49,6 +48,15 @@ open class KeyboardLayoutHelper : OnKeyboardChangeListener {
 
     fun ignoreInitChange(ignore: Boolean): KeyboardLayoutHelper {
         mIgnoreInitChange = ignore
+        return this
+    }
+
+    fun enablePanel(context: Context, panel: View, callback: OnKeyboardCallback): KeyboardLayoutHelper {
+        mInputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        mPanelView = panel
+        mCallback = callback
+        // 初始化状态
+        panel.visibility = View.GONE
         return this
     }
 
@@ -219,28 +227,40 @@ open class KeyboardLayoutHelper : OnKeyboardChangeListener {
             mSmoothAnimator!!.start()
         }
 
-        // 面板式移动
+        // 面板式
         if (mPanelView != null) {
-            if (visible) {
-                val panelView = mPanelView!!.findViewById<View>(R.id.keyboardDetectorPanel)
-                if (panelView.layoutParams.height != height) {
-                    panelView.layoutParams.height = height
-                    panelView.requestLayout()
+            if (mPanelDistance == 0) { // 显隐
+                if (visible) {
+                    if (mPanelView!!.layoutParams.height != height) {
+                        mPanelView!!.layoutParams.height = height
+                        mPanelView!!.requestLayout()
+                    }
+                    mPanelView!!.visibility = View.VISIBLE
+                } else {
+                    mPanelView!!.visibility = View.GONE
                 }
+            } else { // 移动
+                if (visible) {
+                    val panelView = mPanelView!!.findViewById<View>(R.id.keyboardDetectorPanel)
+                    if (panelView.layoutParams.height != height) {
+                        panelView.layoutParams.height = height
+                        panelView.requestLayout()
+                    }
 
-                mPanelAnimator = ValueAnimator.ofInt(mPanelDistance, 0)
-                mPanelAnimator!!.interpolator = DecelerateInterpolator()
-                mPanelAnimator!!.duration = 400
-                mPanelAnimator!!.startDelay = 80
-            } else {
-                mPanelAnimator = ValueAnimator.ofInt(0, mPanelView!!.height)
-                mPanelAnimator!!.duration = 350
+                    mPanelAnimator = ValueAnimator.ofInt(mPanelDistance, 0)
+                    mPanelAnimator!!.interpolator = DecelerateInterpolator()
+                    mPanelAnimator!!.duration = 400
+                    mPanelAnimator!!.startDelay = 80
+                } else {
+                    mPanelAnimator = ValueAnimator.ofInt(0, mPanelView!!.height)
+                    mPanelAnimator!!.duration = 350
+                }
+                mPanelAnimator!!.addUpdateListener { listener ->
+                    val value = listener.animatedValue as Int
+                    mPanelView!!.translationY = value.toFloat()
+                }
+                mPanelAnimator!!.start()
             }
-            mPanelAnimator!!.addUpdateListener { listener ->
-                val value = listener.animatedValue as Int
-                mPanelView!!.translationY = value.toFloat()
-            }
-            mPanelAnimator!!.start()
         }
     }
 
