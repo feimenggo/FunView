@@ -1,3 +1,4 @@
+include ':RangeSeekBar'
 include ':ImageCrop'
 include ':app', ':DrawerSpace', ':Blur', ':NetWorkMonitor', ':Loading'
 rootProject.name='Fun'

@@ -22,4 +22,5 @@
     <item name="ratio" type="id" />
     <item name="grid" type="id" />
     <item name="imageCrop" type="id" />
+    <item name="seek" type="id" />
 </resources>
