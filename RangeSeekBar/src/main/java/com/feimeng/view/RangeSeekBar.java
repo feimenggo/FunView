@@ -61,7 +61,7 @@ public class RangeSeekBar extends FrameLayout {
         mProgressColor = a.getColor(R.styleable.RangeSeekBar_progressColor, Color.parseColor("#007AFD"));
         mTextColor = a.getColor(R.styleable.RangeSeekBar_android_textColor, Color.BLACK);
         int max = a.getInt(R.styleable.RangeSeekBar_android_max, 9);
-        int progress = a.getInt(R.styleable.RangeSeekBar_android_progress, 4);
+        int progress = a.getInt(R.styleable.RangeSeekBar_android_progress, 0);
         a.recycle();
 
         ViewGroup group = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.rsb_layout, this, false);
@@ -187,6 +187,11 @@ public class RangeSeekBar extends FrameLayout {
     }
 
     protected Drawable createThumbDrawable() {
+//        Resources res = getResources();
+//        Bitmap oldBmp = BitmapFactory.decodeResource(res, R.drawable.icon_write_setting);
+//        Bitmap newBmp = Bitmap.createScaledBitmap(oldBmp, mSize, mSize, true);
+//        return new BitmapDrawable(res, newBmp);
+
         GradientDrawable thumb = new GradientDrawable();
         thumb.setSize(mSize + 2, mSize + 2);
         thumb.setColor(Color.WHITE);
