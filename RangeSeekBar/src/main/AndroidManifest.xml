@@ -1,5 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.feimeng.view">
-
-    /
-</manifest>
+<manifest package="com.feimeng.view.rsb" />

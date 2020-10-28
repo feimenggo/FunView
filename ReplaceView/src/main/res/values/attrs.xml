@@ -1,0 +1,8 @@
+<resources>
+    <declare-styleable name="ReplaceView">
+        <attr name="contentPaddingLeft" format="dimension" />
+        <attr name="contentPaddingRight" format="dimension" />
+        <attr name="contentPaddingTop" format="dimension" />
+        <attr name="contentPaddingBottom" format="dimension" />
+    </declare-styleable>
+</resources>

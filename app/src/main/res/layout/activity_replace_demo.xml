@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".replace.ReplaceDemoActivity">
+
+    <EditText
+        android:id="@+id/value1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="搜索内容"
+        android:importantForAutofill="no"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/value2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/value1"
+        android:hint="替换内容"
+        android:importantForAutofill="no"
+        android:inputType="text" />
+
+    <HorizontalScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/value2">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@id/prev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="前一个" />
+
+            <Button
+                android:id="@id/repeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="撤销" />
+
+            <Button
+                android:id="@id/replace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="替换" />
+
+            <Button
+                android:id="@id/replaceAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全部替换" />
+
+            <Button
+                android:id="@id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="后一个" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <com.feimeng.view.replace.ReplaceView
+        android:id="@id/replaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/scroll"
+        app:contentPaddingLeft="10dp"
+        app:contentPaddingRight="10dp"
+        app:contentPaddingTop="10dp" />
+</RelativeLayout>

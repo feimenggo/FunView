@@ -32,7 +32,7 @@
         app:cornerMode="top|all"
         app:cornerRadius="20dp" />
 
-    <com.feimeng.view.RangeSeekBar
+    <com.feimeng.view.rsb.RangeSeekBar
         android:id="@id/seek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

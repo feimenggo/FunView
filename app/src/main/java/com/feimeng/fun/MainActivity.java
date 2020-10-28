@@ -14,6 +14,7 @@ import com.feimeng.fun.imageviewer.ImageViewerDemoActivity;
 import com.feimeng.fun.kaomoji.KaomojiDemoActivity;
 import com.feimeng.fun.keyboarddetectory.KeyboardDetectorDemoActivity;
 import com.feimeng.fun.ratio.RatioLayoutDemoActivity;
+import com.feimeng.fun.replace.ReplaceDemoActivity;
 import com.feimeng.network.monitor.NetWorkMonitorManager;
 import com.feimeng.network.monitor.NetWorkState;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.imageViewer).setOnClickListener(this);
         findViewById(R.id.ratio).setOnClickListener(this);
         findViewById(R.id.grid).setOnClickListener(this);
+        findViewById(R.id.replace).setOnClickListener(this);
         findViewById(R.id.btn).setOnClickListener(this);
         NetWorkMonitorManager.getInstance().init(getApplication());
         NetWorkMonitorManager.getInstance().register(this);
@@ -57,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.grid:
                 startActivity(new Intent(this, GridLayoutDemoActivity.class));
+                break;
+            case R.id.replace:
+                startActivity(new Intent(this, ReplaceDemoActivity.class));
                 break;
         }
     }

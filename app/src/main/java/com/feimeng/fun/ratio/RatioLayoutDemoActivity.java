@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.feimeng.fun.R;
-import com.feimeng.view.RangeSeekBar;
+import com.feimeng.view.rsb.RangeSeekBar;
 
 /**
  * Author: Feimeng

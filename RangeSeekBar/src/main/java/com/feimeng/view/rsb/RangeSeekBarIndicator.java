@@ -1,4 +1,4 @@
-package com.feimeng.view;
+package com.feimeng.view.rsb;
 
 import android.content.Context;
 import android.graphics.Canvas;

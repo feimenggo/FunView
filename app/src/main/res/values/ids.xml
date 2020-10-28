@@ -23,4 +23,10 @@
     <item name="grid" type="id" />
     <item name="imageCrop" type="id" />
     <item name="seek" type="id" />
+    <item name="replace" type="id" />
+    <item name="prev" type="id" />
+    <item name="next" type="id" />
+    <item name="replaceView" type="id" />
+    <item name="repeal" type="id" />
+    <item name="replaceAll" type="id" />
 </resources>

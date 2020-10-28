@@ -54,6 +54,13 @@
         android:layout_below="@id/ratio"
         android:text="网格布局" />
 
+    <Button
+        android:id="@id/replace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/grid"
+        android:text="查找替换" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
