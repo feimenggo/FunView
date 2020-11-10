@@ -5,7 +5,7 @@ package com.feimeng.view.replace;
  * Time:   2020/10/27
  * Description:
  */
-interface TextBlock {
+public interface TextBlock {
     /**
      * 区块起始坐标
      */

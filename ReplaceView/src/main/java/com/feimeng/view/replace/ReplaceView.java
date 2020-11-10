@@ -10,6 +10,8 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.List;
+
 /**
  * Author: Feimeng
  * Time:   2020/10/27
@@ -77,12 +79,41 @@ public class ReplaceView extends ScrollView {
     }
 
     /**
+     * 查找
+     *
+     * @param searchText 查找文本
+     * @return 文本块
+     */
+    public List<TextBlock> find(String searchText, String content) {
+        return mReplaceTextView.find(searchText, content);
+    }
+
+    /**
+     * 通过查找的文本块进行搜索
+     *
+     * @param searchText 搜索文本
+     * @param textBlocks 文本块
+     */
+    public void search(String searchText, List<TextBlock> textBlocks) {
+        mReplaceTextView.search(searchText, textBlocks);
+    }
+
+    /**
      * 查找文本
      *
      * @param searchText 搜索文本
      */
     public void search(String searchText) {
         mReplaceTextView.search(searchText);
+    }
+
+    /**
+     * 获取搜索文本块
+     *
+     * @return 搜索文本块
+     */
+    public List<TextBlock> getSearchBlock() {
+        return mReplaceTextView.getSearchBlock();
     }
 
     /**

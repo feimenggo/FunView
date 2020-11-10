@@ -16,6 +16,7 @@ import android.widget.ScrollView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -90,6 +91,44 @@ class ReplaceTextView extends androidx.appcompat.widget.AppCompatEditText {
     }
 
     /**
+     * 查找
+     *
+     * @param searchText 查找文本
+     * @return 文本块
+     */
+    public List<TextBlock> find(String searchText, String content) {
+        List<TextBlock> list = new ArrayList<>();
+        Matcher matcher = getMatcher(searchText, content);
+        while (matcher.find()) {
+            int start = matcher.start();
+            int end = matcher.end();
+            list.add(new SearchTextBlock(mColorSearch, start, end));
+        }
+        return list;
+    }
+
+    /**
+     * 通过查找的文本块进行搜索
+     *
+     * @param searchText 搜索文本
+     * @param textBlocks 文本块
+     */
+    public void search(String searchText, List<TextBlock> textBlocks) {
+        mSearchText = searchText;
+        // 清空记录
+        mSearchBlocks.clear();
+        mReplaceBlocks.clear();
+        mSearchBlocks.addAll(textBlocks);
+        highlight(getEditable());
+        if (!mSearchBlocks.isEmpty()) {
+            mIndicationPosition = 0; // 初始化指示器
+            scrollToIndicate();
+        }
+        checkMove();
+        checkAction();
+    }
+
+    /**
      * 查找文本
      *
      * @param searchText 搜索文本
@@ -101,7 +140,7 @@ class ReplaceTextView extends androidx.appcompat.widget.AppCompatEditText {
         mReplaceBlocks.clear();
         // 查找内容
         if (!mSearchText.isEmpty()) {
-            Matcher matcher = getMatcher(mSearchText);
+            Matcher matcher = getMatcher(mSearchText, getText());
             while (matcher.find()) {
                 int start = matcher.start();
                 int end = matcher.end();
@@ -117,14 +156,23 @@ class ReplaceTextView extends androidx.appcompat.widget.AppCompatEditText {
         checkAction();
     }
 
-    private Matcher getMatcher(String searchText) {
+    private Matcher getMatcher(String searchText, CharSequence content) {
         String[] arr = {"\\", "$", "(", ")", "*", "+", ".", "[", "]", "?", "^", "{", "}", "|"};
         for (String key : arr) {
             if (searchText.contains(key)) {
                 searchText = searchText.replace(key, "\\" + key);
             }
         }
-        return Pattern.compile(searchText).matcher(getText());
+        return Pattern.compile(searchText).matcher(content);
+    }
+
+    /**
+     * 获取搜索文本块
+     *
+     * @return 搜索文本块
+     */
+    public List<TextBlock> getSearchBlock() {
+        return new ArrayList<>(mSearchBlocks);
     }
 
     /**
