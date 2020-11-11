@@ -1,3 +1,4 @@
+include ':DiffuseImageView'
 include ':SensitiveWord'
 include ':ReplaceView'
 include ':RangeSeekBar'

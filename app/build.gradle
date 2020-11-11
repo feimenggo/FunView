@@ -48,6 +48,7 @@ dependencies {
     implementation project(path: ':Layout')
     implementation project(path: ':RangeSeekBar')
     implementation project(path: ':ReplaceView')
+    implementation project(path: ':DiffuseImageView')
 
     implementation 'org.salient.artvideoplayer:artplayer-java:0.6.0'
     implementation 'org.salient.artvideoplayer:artplayer-ui:0.6.0'

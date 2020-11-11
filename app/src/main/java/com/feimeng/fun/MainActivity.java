@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.feimeng.fun.diffuse.DiffuseImageDemoActivity;
 import com.feimeng.fun.gridlayout.GridLayoutDemoActivity;
 import com.feimeng.fun.imagecrop.ImageCropDemoActivity;
 import com.feimeng.fun.imagepicker.ImagePickerDemoActivity;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.ratio).setOnClickListener(this);
         findViewById(R.id.grid).setOnClickListener(this);
         findViewById(R.id.replace).setOnClickListener(this);
+        findViewById(R.id.diffuse).setOnClickListener(this);
         findViewById(R.id.btn).setOnClickListener(this);
         NetWorkMonitorManager.getInstance().init(getApplication());
         NetWorkMonitorManager.getInstance().register(this);
@@ -62,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.replace:
                 startActivity(new Intent(this, ReplaceDemoActivity.class));
+                break;
+            case R.id.diffuse:
+                startActivity(new Intent(this, DiffuseImageDemoActivity.class));
                 break;
         }
     }

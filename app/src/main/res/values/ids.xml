@@ -29,4 +29,5 @@
     <item name="replaceView" type="id" />
     <item name="repeal" type="id" />
     <item name="replaceAll" type="id" />
+    <item name="diffuse" type="id" />
 </resources>

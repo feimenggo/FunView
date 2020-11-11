@@ -61,6 +61,13 @@
         android:layout_below="@id/grid"
         android:text="查找替换" />
 
+    <Button
+        android:id="@id/diffuse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/replace"
+        android:text="弥散图片" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
