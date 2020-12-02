@@ -205,6 +205,15 @@ public class ImageCropView extends androidx.appcompat.widget.AppCompatImageView 
         mRestoreRequest = false;
     }
 
+    /**
+     * 设置轮廓样式
+     *
+     * @param outlineStyle 轮廓样式
+     */
+    public void setOutlineStyle(int outlineStyle) {
+        mOutlineStyle = outlineStyle;
+    }
+
     @Override
     public void setScaleType(ScaleType scaleType) {
         if (scaleType == ScaleType.MATRIX) {
