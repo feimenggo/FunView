@@ -15,6 +15,7 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -34,10 +35,12 @@ public class NetWorkMonitorManager {
     private BroadcastReceiver mReceiver;
     private ConnectivityManager.NetworkCallback mNetworkCallback;
 
+    private NetWorkState mCurrentNetWorkState;
+
     /**
      * 存储接受网络状态变化消息的方法的map
      */
-    private Map<Object, NetWorkStateReceiverMethod> mNetWorkStateChangedMethodMap = new HashMap<>();
+    private final Map<Object, WeakReference<NetWorkStateReceiverMethod>> mNetWorkStateChangedMethodMap = new HashMap<>();
 
     public static NetWorkMonitorManager getInstance() {
         if (sInstance == null) {
@@ -79,21 +82,7 @@ public class NetWorkMonitorManager {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     if (ANDROID_NET_CHANGE_ACTION.equalsIgnoreCase(intent.getAction())) {
-                        //网络发生变化 没有网络-0：WIFI网络1：4G网络-4：3G网络-3：2G网络-2
-                        int netType = NetStateUtils.getAPNType(context);
-                        NetWorkState netWorkState;
-                        switch (netType) {
-                            case 0: // None
-                                netWorkState = NetWorkState.NONE;
-                                break;
-                            case 1: // Wifi
-                                netWorkState = NetWorkState.WIFI;
-                                break;
-                            default: // GPRS
-                                netWorkState = NetWorkState.GPRS;
-                                break;
-                        }
-                        postNetState(netWorkState);
+                        updateNetWorkState(fetchNetWorkState());
                     }
                 }
             };
@@ -101,6 +90,30 @@ public class NetWorkMonitorManager {
             intentFilter.addAction(ANDROID_NET_CHANGE_ACTION);
             mApplication.registerReceiver(mReceiver, intentFilter);
         }
+        updateNetWorkState(fetchNetWorkState());
+    }
+
+    private NetWorkState fetchNetWorkState() {
+        //网络发生变化 没有网络-0：WIFI网络1：4G网络-4：3G网络-3：2G网络-2
+        int netType = NetStateUtils.getAPNType(mApplication);
+        NetWorkState netWorkState;
+        switch (netType) {
+            case 0: // None
+                netWorkState = NetWorkState.NONE;
+                break;
+            case 1: // Wifi
+                netWorkState = NetWorkState.WIFI;
+                break;
+            default: // GPRS
+                netWorkState = NetWorkState.GPRS;
+                break;
+        }
+        return netWorkState;
+    }
+
+    private void updateNetWorkState(NetWorkState netWorkState) {
+        mCurrentNetWorkState = netWorkState;
+        postNetState(netWorkState);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -112,20 +125,7 @@ public class NetWorkMonitorManager {
             @Override
             public void onAvailable(@NonNull Network network) {
                 super.onAvailable(network);
-                int netType = NetStateUtils.getAPNType(NetWorkMonitorManager.this.mApplication);
-                NetWorkState netWorkState;
-                switch (netType) {
-                    case 0://None
-                        netWorkState = NetWorkState.NONE;
-                        break;
-                    case 1://Wifi
-                        netWorkState = NetWorkState.WIFI;
-                        break;
-                    default://GPRS
-                        netWorkState = NetWorkState.GPRS;
-                        break;
-                }
-                postNetState(netWorkState);
+                updateNetWorkState(fetchNetWorkState());
             }
 
             /**
@@ -134,7 +134,7 @@ public class NetWorkMonitorManager {
             @Override
             public void onLost(@NonNull Network network) {
                 super.onLost(network);
-                postNetState(NetWorkState.NONE);
+                updateNetWorkState(NetWorkState.NONE);
             }
 
             /**
@@ -175,7 +175,10 @@ public class NetWorkMonitorManager {
      * 反注册广播
      */
     public void onDestroy() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) mApplication.getSystemService(Context.CONNECTIVITY_SERVICE);
+            connectivityManager.unregisterNetworkCallback(mNetworkCallback);
+        } else {
             mApplication.unregisterReceiver(mReceiver);
         }
     }
@@ -186,10 +189,23 @@ public class NetWorkMonitorManager {
      * @param object 对象
      */
     public void register(Object object) {
+        register(object, true);
+    }
+
+    /**
+     * 注入
+     *
+     * @param object                   对象
+     * @param fetchCurrentNetWorkState 是否立即获取当前网络状态
+     */
+    public void register(Object object, boolean fetchCurrentNetWorkState) {
         if (object != null) {
             NetWorkStateReceiverMethod netWorkStateReceiverMethod = findMethod(object);
             if (netWorkStateReceiverMethod != null) {
-                mNetWorkStateChangedMethodMap.put(object, netWorkStateReceiverMethod);
+                mNetWorkStateChangedMethodMap.put(object, new WeakReference<>(netWorkStateReceiverMethod));
+                if (fetchCurrentNetWorkState && mCurrentNetWorkState != null) {
+                    postNetState(mCurrentNetWorkState);
+                }
             }
         }
     }
@@ -213,8 +229,8 @@ public class NetWorkMonitorManager {
     private void postNetState(NetWorkState netWorkState) {
         Set<Object> set = mNetWorkStateChangedMethodMap.keySet();
         for (Object object : set) {
-            NetWorkStateReceiverMethod netWorkStateReceiverMethod = mNetWorkStateChangedMethodMap.get(object);
-            invokeMethod(netWorkStateReceiverMethod, netWorkState);
+            NetWorkStateReceiverMethod netWorkStateReceiver = mNetWorkStateChangedMethodMap.get(object).get();
+            if (netWorkStateReceiver != null) invokeMethod(netWorkStateReceiver, netWorkState);
         }
     }
 
@@ -246,7 +262,7 @@ public class NetWorkMonitorManager {
     private NetWorkStateReceiverMethod findMethod(Object object) {
         NetWorkStateReceiverMethod targetMethod;
         if (object != null) {
-            Class myClass = object.getClass();
+            Class<?> myClass = object.getClass();
             //获取所有的方法
             Method[] methods = myClass.getDeclaredMethods();
             for (Method method : methods) {
@@ -257,7 +273,7 @@ public class NetWorkMonitorManager {
                     }
                 }
                 //获取方法参数
-                Class[] parameters = method.getParameterTypes();
+                Class<?>[] parameters = method.getParameterTypes();
                 if (parameters.length != 1) continue;
                 //参数的类型需要是NetWorkState类型
                 if (parameters[0].getName().equals(NetWorkState.class.getName())) {

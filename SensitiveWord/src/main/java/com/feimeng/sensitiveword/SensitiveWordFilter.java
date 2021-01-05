@@ -32,14 +32,11 @@ public class SensitiveWordFilter {
     }
 
     public void put(String word) {
-        if (StringUtils.isBlank(word)) {
-            throw new IllegalArgumentException("关键词不能为空");
-        }
-
+        // 关键词不能为空
+        if (StringUtils.isBlank(word)) return;
         word = StringUtils.trim(word);
-        if (word.length() < 2) {
-            throw new IllegalArgumentException("关键词至少2个字");
-        }
+        // 关键词至少2个字
+        if (word.length() < 2) return;
 
         Character fisrtChar = word.charAt(0);
         DfaNode node = cacheNodes.get(fisrtChar);
