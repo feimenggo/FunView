@@ -40,6 +40,7 @@ class SelectionSpec private constructor() {
     var maxVideoSelectable: Int = 0
     var filters: ArrayList<Filter>? = null
     var capture: Boolean = false
+    var capturePick: Boolean = true // 是否直接使用拍照图片
     var captureDirectory: String? = null
     var spanCount: Int = 0
     var gridExpectedSize: Int = 0

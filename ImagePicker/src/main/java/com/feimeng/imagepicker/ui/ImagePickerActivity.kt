@@ -245,9 +245,13 @@ class ImagePickerActivity : BaseImagePickerActivity(), AlbumCollection.AlbumCall
                 }
                 REQ_CAPTURE_IMAGE -> {
                     if (mImageCaptureUri != null) { // 拍照成功
-                        mAlbumTitleView.post {
-                            mImageCaptureFile?.let { saveImageIntoGallery(mImageCaptureFile!!) }
-                            mAlbumMediaCollection.reload() // 刷新相册
+                        if (SelectionSpec.instance.capturePick) { // 直接使用照片
+                            if (mImageCaptureUri != null) pickerResult(ArrayList<Uri>(1).apply { add(mImageCaptureUri!!) })
+                        } else {
+                            mAlbumTitleView.postDelayed({
+                                mImageCaptureFile?.let { saveImageIntoGallery(mImageCaptureFile!!) }
+                                mAlbumMediaCollection.reload() // 刷新相册
+                            }, 200)
                         }
                     }
                 }
