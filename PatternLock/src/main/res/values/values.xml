@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="PLV_normalColor">#EAEEF2</color>
+    <color name="PLV_rightColor">#007AFD</color>
+    <color name="PLV_wrongColor">#FF7951</color>
+
+    <dimen name="PLV_bigRadius">30dp</dimen>
+    <dimen name="PLV_smallRadius">12dp</dimen>
+
+    <declare-styleable name="PatternLockView">
+        <attr name="itemCount" format="integer" />
+        <attr name="smallRadius" format="dimension" />
+        <attr name="bigRadius" format="dimension" />
+        <attr name="normalColor" format="color" />
+        <attr name="rightColor" format="color" />
+        <attr name="wrongColor" format="color" />
+    </declare-styleable>
+</resources>
