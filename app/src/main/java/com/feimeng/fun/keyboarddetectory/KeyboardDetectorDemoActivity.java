@@ -44,7 +44,7 @@ public class KeyboardDetectorDemoActivity extends AppCompatActivity implements K
         mDetector.addKeyboardChangeListener(mKeyboardLayoutHelper = new KeyboardLayoutHelper().addSmoothView(mFloatingView)
                 .addInstantView(mTextareaView, 0, getResources().getDimensionPixelOffset(R.dimen.toolkitHeight))
                 .enablePanel(this, mInputWrap.findViewById(R.id.keyboardDetectorPanel), this));
-        mDetector.start(mInputWrap);
+        mDetector.start();
     }
 
     @Override

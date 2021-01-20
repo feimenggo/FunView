@@ -4,12 +4,17 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.PopupWindow
+import android.widget.ScrollView
+import android.widget.Toast
 
 
 /**
@@ -19,7 +24,7 @@ import android.widget.PopupWindow
  */
 class KeyboardDetector(private var activity: Activity) : PopupWindow(activity) {
     private var mTargetView = TargetView() // 用于计算键盘高度的View
-    private var mActivityView: View = activity.findViewById(android.R.id.content) // 关联的Activity的高度
+    private var mActivityView: View // 关联的Activity的高度
     private var mKeyboardHeight = arrayOf(0, 0) // 缓存的键盘高度 [0]:portrait [1]:landscape
     private var mOrientation: Int = Configuration.ORIENTATION_UNDEFINED // 设备方向
 
@@ -29,22 +34,30 @@ class KeyboardDetector(private var activity: Activity) : PopupWindow(activity) {
     init {
         contentView = mTargetView
         width = 0
-        height = WindowManager.LayoutParams.MATCH_PARENT
-        setBackgroundDrawable(ColorDrawable(0))
-        softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE or WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE
+        height = ViewGroup.LayoutParams.MATCH_PARENT
+        setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        isFocusable = false
+        isOutsideTouchable = false
         inputMethodMode = INPUT_METHOD_NEEDED
+        softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
         mActivityView = activity.findViewById(android.R.id.content)
+        setOnDismissListener {
+            Toast.makeText(mActivityView.context, "键盘检测器关闭", Toast.LENGTH_LONG).show()
+        }
     }
 
-    fun start(hold: View) {
-        hold.post {
+    fun start() {
+        mActivityView.post {
             if (!isShowing && mActivityView.windowToken != null) {
                 showAtLocation(mActivityView, Gravity.NO_GRAVITY, 0, 0)
+            } else {
+                Toast.makeText(mActivityView.context, "无法检测键盘", Toast.LENGTH_LONG).show()
             }
         }
     }
 
     fun destroy() {
+        setOnDismissListener(null)
         mKeyboardChangeListenerListener?.clear()
         mKeyboardChangeListenerListener = null
         dismiss()
@@ -98,9 +111,9 @@ class KeyboardDetector(private var activity: Activity) : PopupWindow(activity) {
         }
     }
 
-    private inner class TargetView : View(activity) {
+    private inner class TargetView : ScrollView(activity) {
         override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-//            Log.d("nodawang", "onSizeChanged w:$w h:$h oldw:$oldw oldh:$oldh")
+            Log.d("nodawang", "onSizeChanged w:$w h:$h oldw:$oldw oldh:$oldh")
             if (oldw == 0 && oldh == 0) { // 初始化数据
                 mOrientation = getScreenOrientation()
                 val sp = getSP()

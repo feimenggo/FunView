@@ -1,3 +1,4 @@
+include ':RecyclerFastScroller'
 include ':PatternLock'
 include ':DiffuseImageView'
 include ':SensitiveWord'
