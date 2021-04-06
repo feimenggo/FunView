@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -380,9 +381,9 @@ public class RecyclerFastScroller extends FrameLayout {
         mRecyclerView = recyclerView;
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                RecyclerFastScroller.this.show(true);
+                if (recyclerView.canScrollVertically(1)) RecyclerFastScroller.this.show(true);
             }
         });
         if (recyclerView.getAdapter() != null) attachAdapter(recyclerView.getAdapter());
